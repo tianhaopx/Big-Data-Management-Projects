@@ -1,6 +1,6 @@
 <<<<<<< HEAD
-/.idea
-/out
+# ignore the iml files due to the different configuration
+*.iml
 
 *.class
 

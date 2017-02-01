@@ -45,7 +45,7 @@ public class GenerateCustomerData {
 
     public static void main(String[] args) throws IOException {
         GenerateCustomerData a = new GenerateCustomerData();
-        File fout = new File("customer");
+        File fout = new File("Project1/input/customer");
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         for (int i = 1; i <= 50000; i++) {
