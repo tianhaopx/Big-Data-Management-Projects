@@ -45,7 +45,7 @@ public class GenerateTransactionData {
 
     public static void main(String[] args) throws IOException {
         GenerateTransactionData a = new GenerateTransactionData();
-        File fout = new File("Project1/input/transcation");
+        File fout = new File("Project1/input/transaction");
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         for (int i = 1; i <= 5000000; i++) {
@@ -54,5 +54,4 @@ public class GenerateTransactionData {
         }
         bw.close();
     }
-
 }
