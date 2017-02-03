@@ -33,27 +33,27 @@ public class Query3 {
     public static class TransactionMapper extends Mapper<LongWritable, Text, Text, Text> {
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             String[] str_value = value.toString().split(",");
-            context.write(new Text(str_value[1]), new Text("null,0,1"+","+Float.valueOf(str_value[2])+","+Integer.valueOf(str_value[3])));
+            context.write(new Text(str_value[1]), new Text("null,0,1,"+Float.valueOf(str_value[2])+","+Integer.valueOf(str_value[3])));
         }
     }
 
     public static class SumTransactionReducer extends Reducer<Text, Text, Text, Text> {
         public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
             String cname = "null";
-            int cage = 0;
+            String cage = "0";
             int numOfTrans = 0;
             float sum = 0.0f;
             int numOfItem = 20;
 
             for (Text str:value) {
                 String[] str_value = str.toString().split(",");
-                cname = (str_value[0]== "null") ? "null":str_value[0];
-                cage = Integer.valueOf(str_value[1]);
+                cname = (str_value[0].equals("null")) ? cname:str_value[0];
+                cage = (str_value[1].equals("0")) ? cage:str_value[1];
                 numOfTrans += Integer.valueOf(str_value[2]);
                 sum += Float.valueOf(str_value[3]);
                 numOfItem = Math.min(numOfItem,Integer.valueOf(str_value[4]));
             }
-            context.write(key, new Text(cname+","+Integer.toString(cage)+","+Integer.toString(numOfTrans)+","+Float.toString(sum)+","+Integer.toString(numOfItem)));
+            context.write(key, new Text(cname+","+cage+","+Integer.toString(numOfTrans)+","+Float.toString(sum)+","+Integer.toString(numOfItem)));
         }
     }
 
@@ -69,10 +69,8 @@ public class Query3 {
         job.setReducerClass(Query3.SumTransactionReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
-
-        MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, CustomerMapper.class);
         MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, TransactionMapper.class);
-        
+        MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, CustomerMapper.class);
         FileOutputFormat.setOutputPath(job, new Path(args[2]));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
 
