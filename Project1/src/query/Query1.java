@@ -18,7 +18,6 @@ public class Query1 {
 
     public static class CustomerMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
 
-        @Override
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             String[] customer = value.toString().split(",");
             if (Integer.valueOf(customer[3]) >= 2 && Integer.valueOf(customer[3]) <= 6) {
