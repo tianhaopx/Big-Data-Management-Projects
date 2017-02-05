@@ -5,9 +5,9 @@ import java.util.Random;
 
 public class GenerateCustomerData {
     static final String AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private Random length = new Random();
 
     public String randomName() {
-        Random length = new Random();
         int randomLength = length.nextInt((20 - 10) + 1) + 10;
         String sb = "";
         for (int i = 0; i < randomLength; i++)
@@ -16,19 +16,16 @@ public class GenerateCustomerData {
     }
 
     public String randomAge() {
-        Random length = new Random();
         int randomAge = length.nextInt((70 - 10) + 1) + 10;
         return Integer.toString(randomAge);
     }
 
     public String randomCountry() {
-        Random length = new Random();
         int randomCountry = length.nextInt((10 - 1) + 1) + 1;
         return Integer.toString(randomCountry);
     }
 
     public String randomSalary() {
-        Random length = new Random();
         float randomSalary = length.nextFloat() * ((10000.0f - 100.0f) + 1.0f) + 100.0f;
         return Float.toString(randomSalary);
     }
