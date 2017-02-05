@@ -61,3 +61,6 @@ fabric.properties
 
 output/
 target/
+input/
+.idea/artifacts
+META-INF/
