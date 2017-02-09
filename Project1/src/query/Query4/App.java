@@ -32,6 +32,7 @@ public class App extends Configured implements Tool {
 
 
         Configuration conf = job.getConfiguration();
+        conf.set("mapred.textoutputformat.separator", ",");
         DistributedCache.addCacheFile(new URI("/user/test/customer"),conf);
 
         job.setOutputKeyClass(Text.class);
