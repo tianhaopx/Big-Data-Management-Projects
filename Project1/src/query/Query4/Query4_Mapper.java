@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InterruptedIOException;
+import java.net.URI;
 import java.util.HashMap;
 
 public class Query4_Mapper extends org.apache.hadoop.mapreduce.Mapper<LongWritable, Text, Text, Text> {
@@ -17,8 +18,9 @@ public class Query4_Mapper extends org.apache.hadoop.mapreduce.Mapper<LongWritab
         private BufferedReader brReader;
 
         public void setup(Context context) throws IOException, InterruptedIOException {
-            Path[] cacheFilesLocal = DistributedCache.getLocalCacheFiles(context.getConfiguration());
-            for (Path eachPath : cacheFilesLocal) {
+            URI[] cacheFilesLocal = DistributedCache.getCacheFiles(context.getConfiguration());
+            for (URI eachURI : cacheFilesLocal) {
+                Path eachPath = new Path(eachURI);
                 if (eachPath.getName().toString().trim().equals("customer")) {
                     loadCustomerHashMap(eachPath, context);
                 }

@@ -7,8 +7,8 @@ public class GenerateTransactionData {
     static final String AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private Random length = new Random();
 
-    public String randomCustID() {
-        int randomCustID = length.nextInt((50000 - 1) + 1) + 1;
+    public String randomCustID(int min,int max) {
+        int randomCustID = length.nextInt(max-min+1)+min;
         return Integer.toString(randomCustID);
     }
 
@@ -34,7 +34,7 @@ public class GenerateTransactionData {
 
     public String randomTransactionInstance(int n) {
         String id = Integer.toString(n);
-        String CustID = randomCustID();
+        String CustID = randomCustID(1,50000);
         float TransTotal = randomTransTotal(10f, 1000f);
         String NumItems = randomNumItems();
         String Desc = randomDesc();

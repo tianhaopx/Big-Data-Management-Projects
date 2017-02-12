@@ -10,7 +10,9 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import java.io.IOException;
+
+import java.io.*;
+import java.util.HashMap;
 
 
 public class Query5 {
@@ -22,9 +24,13 @@ public class Query5 {
     // if the mapper do not contain the message we need
     // we set the value into null or 0
 
+    private static HashMap<String, String> customMap = new HashMap<>();
+
     public static class CustomerCountMapper extends Mapper<LongWritable, Text, Text, Text> {
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String[] strings = value.toString().split(",");
+            customMap.put(strings[0], strings[1]);
             context.write(new Text("-1"), new Text("1,0"));
         }
     }
@@ -46,19 +52,19 @@ public class Query5 {
             int numOfTrans = 0;
 
             if (key.toString().equals("-1")) {
-                for (Text str:value) {
+                for (Text str : value) {
                     String[] str_value = str.toString().split(",");
                     numsofCCount += Integer.valueOf(str_value[0].toString());
                     numsofTCount += Integer.valueOf(str_value[1].toString());
                 }
             } else {
-                for (Text str:value) {
+                for (Text str : value) {
                     numOfTrans += Integer.valueOf(str.toString());
                 }
             }
 
             if (key.toString().equals("-1")) {
-                context.write(key, new Text(Integer.toString(numsofCCount)+","+Integer.toString(numsofTCount)));
+                context.write(key, new Text(Integer.toString(numsofCCount) + "," + Integer.toString(numsofTCount)));
             } else {
                 context.write(key, new Text(Integer.toString(numOfTrans)));
             }
@@ -69,20 +75,21 @@ public class Query5 {
     public static class SumAllReducer_2 extends Reducer<Text, Text, Text, Text> {
 
         static int avg;
+
         public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
             int numsofCCount = 0;
             int numsofTCount = 0;
             int numOfTrans = 0;
             if (key.toString().equals("-1")) {
-                for (Text str:value) {
+                for (Text str : value) {
                     String[] str_value = str.toString().split(",");
                     numsofCCount += Integer.valueOf(str_value[0].toString());
                     numsofTCount += Integer.valueOf(str_value[1].toString());
                 }
-                avg = numsofTCount/numsofCCount;
+                avg = numsofTCount / numsofCCount;
                 System.out.println(avg);
             } else {
-                for (Text str:value) {
+                for (Text str : value) {
                     numOfTrans += Integer.valueOf(str.toString());
                 }
             }
@@ -90,8 +97,8 @@ public class Query5 {
             if (key.toString().equals("-1")) {
                 ;
             } else {
-                if (numOfTrans>=avg) {
-                    context.write(key, new Text(Integer.toString(numOfTrans)));
+                if (numOfTrans >= avg) {
+                    context.write(new Text(customMap.get(key.toString())), new Text(Integer.toString(numOfTrans)));
                 }
             }
 

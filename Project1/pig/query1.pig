@@ -3,5 +3,8 @@ t = LOAD 'hdfs://localhost/user/test/transaction' USING PigStorage(',') as (tran
 temp = GROUP t BY custID;
 sum = FOREACH temp GENERATE group, COUNT(t.transID) as total;
 ans = JOIN c BY custID, sum BY group;
-ret = FOREACH ans GENERATE name,total;
+res = FOREACH ans GENERATE name,total;
+resg = GROUP res ALL;
+min = FOREACH resg GENERATE group, MIN(res.total) as minnum;
+ret = FILTER res BY total==min.minnum;
 STORE ret INTO 'pig_1_output' using PigStorage(',');
