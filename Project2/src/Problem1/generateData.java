@@ -17,7 +17,7 @@ public class generateData {
         return Arrays.toString(new int[]{x_axis,y_axis});
     }
 
-    public String RandomRectangle() {
+    public String RandomRectangle(int n) {
         // up right
         int x_axis = length.nextInt((10000 - 1) + 1) + 1;
         int y_axis = length.nextInt((10000 - 1) + 1) + 1;
@@ -31,7 +31,9 @@ public class generateData {
         String down_l = Arrays.toString(new int[]{x_axis-width,y_axis-height});
         // down right
         String down_r = Arrays.toString(new int[]{x_axis,y_axis-height});
-        return down_l+","+down_r+","+up_l+","+up_r;
+        // final output like
+        // rectangle#, down_l, down_r, up_l, up_r
+        return "r"+Integer.toString(n)+","+down_l+","+down_r+","+up_l+","+up_r;
     }
 
     public static void main(String[] Args) throws IOException {
@@ -49,7 +51,7 @@ public class generateData {
         FileOutputStream fos2 = new FileOutputStream(fout2);
         BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(fos2));
         for (int i = 1; i <= 2500000; i++) {
-            bw2.write(a.RandomRectangle());
+            bw2.write(a.RandomRectangle(i));
             bw2.newLine();
         }
         bw2.close();
