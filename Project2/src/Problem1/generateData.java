@@ -28,8 +28,7 @@ public class generateData {
         int down = up - height;
         // final output like
         // rectangle#, down_l, down_r, up_l, up_r
-        return "r" + n + "," + left + "," + down + "," + right + "," + up + "," + left + "," + up + "," +
-                right + "," + up + "";
+        return "r" + n + "," + left + "," + down +","+right + "," + up;
     }
 
     public static void main(String[] Args) throws IOException {
@@ -37,8 +36,8 @@ public class generateData {
         String fout1 = "Project2/input/coordinates";
         FileOutputStream fos1 = new FileOutputStream(fout1);
         BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(fos1));
-        // 100MB we need 9000000
-        for (int i = 1; i <= 9000; i++) {
+        // 100MB we need 11000000
+        for (int i = 1; i <= 11000000; i++) {
             bw1.write(a.RandomCoordinates());
             bw1.newLine();
         }
@@ -47,8 +46,8 @@ public class generateData {
         String fout2 = "Project2/input/rectangles";
         FileOutputStream fos2 = new FileOutputStream(fout2);
         BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(fos2));
-        // 100MB we need 2500000
-        for (int i = 1; i <= 2500; i++) {
+        // 100MB we need 4000000
+        for (int i = 1; i <= 4000000; i++) {
             bw2.write(a.RandomRectangle(i));
             bw2.newLine();
         }
