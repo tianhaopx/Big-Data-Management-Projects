@@ -19,11 +19,20 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class spatialJoin {
 
     public static class SpatialMapper extends Mapper<LongWritable, Text, Text, Text> {
-        String ws;
-        public void configure(Configuration job) {
-            ws = job.get("Window");
-        }
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            Configuration conf = context.getConfiguration();
+            String ws = conf.get("Window");
+            int w_x_1 = 0;
+            int w_x_2 = 10000;
+            int w_y_1 = 0;
+            int w_y_2 = 10000;
+            if (!(ws.equals(null))){
+                String[] windows = ws.split(",");
+                w_x_1 = Integer.valueOf(windows[0]);
+                w_x_2 = Integer.valueOf(windows[2]);
+                w_y_1 = Integer.valueOf(windows[1]);
+                w_y_2 = Integer.valueOf(windows[3]);
+            }
             String[] data = value.toString().split(",");
             if (data.length == 5) {
                 int x_1 = Integer.valueOf(data[1]);
@@ -33,24 +42,21 @@ public class spatialJoin {
                 // divide the rectangles to the different regions
                 for (int i=(int)Math.floor(x_1/100);i<=(int)Math.floor(x_2/100);i++) {
                     for (int j=(int)Math.floor(y_1/100);j<=(int)Math.floor(y_2/100);j++)
-                    context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                        if (x_1 >= w_x_1 && x_2 <= w_x_2 && y_1 >= w_y_1 && y_2 <= w_y_2) {
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                    }
                 }
             } else {
                 // divide the points to the different regions
                 int temp_x = (int)Math.floor(Integer.valueOf(data[0])/100);
                 int temp_y = (int)Math.floor(Integer.valueOf(data[1])/100);
-                context.write(new Text(Integer.toString(temp_x)+"_"+Integer.toString(temp_y)), new Text(value.toString()));
+                if (Integer.valueOf(data[0]) >= w_x_1 && Integer.valueOf(data[0]) <= w_x_2 && Integer.valueOf(data[1]) >= w_y_1 && Integer.valueOf(data[1]) <= w_y_2) {
+                    context.write(new Text(Integer.toString(temp_x) + "_" + Integer.toString(temp_y)), new Text(value.toString()));
+                }
             }
         }
     }
 
-    public static class SpatialCombiner extends Reducer<Text,Text,Text,Text>{
-        public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
-            for (Text str:value) {
-                String[] str_value = str.toString().split(",");
-            }
-        }
-    }
 
     public static class SpatialReducer extends Reducer<Text,Text,Text,Text> {
         public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
@@ -91,6 +97,11 @@ public class spatialJoin {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
+        if (args.length != 3) {
+            conf.set("Window",args[3]+","+args[4]+","+args[5]+","+args[6]);
+        } else {
+            conf.set("Window",null);
+        }
         Job job = Job.getInstance(conf, "spatialJoin");
         job.setJarByClass(spatialJoin.class);
         job.setMapperClass(SpatialMapper.class);
