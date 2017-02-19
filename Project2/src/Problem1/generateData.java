@@ -22,8 +22,11 @@ public class generateData {
         int right = length.nextInt((10000 - 1) + 1) + 1;
         int up = length.nextInt((10000 - 1) + 1) + 1;
         // height & width
-        int width = length.nextInt((right - 1) + 1) + 1;
-        int height = length.nextInt((up - 1) + 1) + 1;
+        // this part is a little bit tricky
+        // if we set the range of the width and height to big
+        // map will exceed the memory limits
+        int width = length.nextInt((20 - 1) + 1) + 1;
+        int height = length.nextInt((5 - 1) + 1) + 1;
         int left = right - width;
         int down = up - height;
         // final output like
