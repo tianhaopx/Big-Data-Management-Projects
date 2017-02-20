@@ -1,14 +1,12 @@
-package Problem1;
+package GenerateData;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Random;
 
 /**
  * Created by test on 2/16/17.
  */
-public class generateData {
+public class generateP1Data {
     private Random length = new Random();
 
     public String RandomCoordinates() {
@@ -35,7 +33,7 @@ public class generateData {
     }
 
     public static void main(String[] Args) throws IOException {
-        generateData a = new generateData();
+        generateP1Data a = new generateP1Data();
         String fout1 = "Project2/input/coordinates";
         FileOutputStream fos1 = new FileOutputStream(fout1);
         BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(fos1));

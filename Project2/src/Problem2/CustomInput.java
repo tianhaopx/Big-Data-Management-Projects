@@ -11,7 +11,5 @@ import java.io.IOException;
  * Created by test on 2/19/17.
  */
 public class CustomInput {
-    public static class CustomInputFormat extends InputFormat<LongWritable, Text> {
 
-    }
 }
