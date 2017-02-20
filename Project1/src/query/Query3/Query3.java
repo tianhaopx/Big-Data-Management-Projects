@@ -26,7 +26,7 @@ public class Query3 {
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             String[] customer = value.toString().split(",");
-            context.write(new Text(customer[0]), new Text(customer[1]+","+customer[2]+",0,0,20"));
+            context.write(new Text(customer[0]), new Text(customer[1]+","+customer[4]+",0,0,20"));
         }
     }
 
