@@ -92,7 +92,7 @@ public class kMeans {
         return ret;
     }
 
-    public static List<String> getPrevCentroids(String f) throws Exception{
+    public static List<String> getCentroids(String f) throws Exception{
         List<String> ret = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(f));
         String line;
@@ -105,22 +105,25 @@ public class kMeans {
     public static void main(String[] args) throws Exception{
         String c1;
         String c2;
+        String prev_x = "";
+        String prev_y = "";
         String input = args[0];
         String output = args[1];
         String file_name = "part-r-00000";
         boolean converge = false;
-        for (int i=1;i<=5;i++) {
+        for (int i=1;i<=50;i++) {
             if (converge == false){
-                System.out.println(i);
                 if (i == 1) {
                     List<String> a = getRandomCentroids(args[0]);
                     c1 = a.toArray()[0].toString();
                     c2 = a.toArray()[1].toString();
                 } else {
                     String last_out = output+"output_"+Integer.toString(i-1)+"/"+file_name;
-                    List<String> PrevC = getPrevCentroids(last_out);
+                    List<String> PrevC = getCentroids(last_out);
                     c1 = PrevC.toArray()[0].toString();
                     c2 = PrevC.toArray()[1].toString();
+                    prev_x = c1;
+                    prev_y = c2;
                 }
                 Configuration conf = new Configuration();
                 conf.set("C1",c1);
@@ -136,7 +139,12 @@ public class kMeans {
                 FileInputFormat.addInputPath(job, new Path(input));
                 FileOutputFormat.setOutputPath(job, temp_out);
                 job.waitForCompletion(true);
+                List<String> CurrC = getCentroids(output+"output_"+Integer.toString(i)+"/"+file_name);
+                if (prev_x.equals(CurrC.toArray()[0].toString()) && prev_y.equals(CurrC.toArray()[1].toString())) {
+                    converge = true;
+                }
             } else {
+                System.out.println("We Converge!");
                 break;
             }
         }
