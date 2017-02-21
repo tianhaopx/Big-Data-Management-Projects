@@ -97,7 +97,7 @@ public class Query5 {
             if (key.toString().equals("-1")) {
                 ;
             } else {
-                if (numOfTrans >= avg) {
+                if (numOfTrans > avg) {
                     context.write(new Text(customMap.get(key.toString())), new Text(Integer.toString(numOfTrans)));
                 }
             }

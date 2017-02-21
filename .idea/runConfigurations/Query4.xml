@@ -1,9 +1,14 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Query2" type="Application" factoryName="Application">
-    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-    <option name="MAIN_CLASS_NAME" value="query.Query2.Query2" />
+  <configuration default="false" name="Query4" type="Application" factoryName="Application">
+    <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+      <pattern>
+        <option name="PATTERN" value="query.Query4.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="MAIN_CLASS_NAME" value="query.Query4.App" />
     <option name="VM_PARAMETERS" value="" />
-    <option name="PROGRAM_PARAMETERS" value="input/transaction output2/" />
+    <option name="PROGRAM_PARAMETERS" value="input/transaction output4/" />
     <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />
