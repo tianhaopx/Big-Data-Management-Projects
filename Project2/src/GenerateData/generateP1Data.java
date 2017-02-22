@@ -16,8 +16,8 @@ public class generateP1Data {
     }
 
     public String RandomRectangle(int n) {
-        // up right
-        int right = length.nextInt((10000 - 1) + 1) + 1;
+        // top left
+        int left = length.nextInt((10000 - 1) + 1) + 1;
         int up = length.nextInt((10000 - 1) + 1) + 1;
         // height & width
         // this part is a little bit tricky
@@ -25,11 +25,9 @@ public class generateP1Data {
         // map will exceed the memory limits
         int width = length.nextInt((20 - 1) + 1) + 1;
         int height = length.nextInt((5 - 1) + 1) + 1;
-        int left = right - width;
-        int down = up - height;
         // final output like
-        // rectangle#, down_l, down_r, up_l, up_r
-        return "r" + n + "," + left + "," + down +","+right + "," + up;
+        // rectangle#, up_left_x, up_left_y, width, height
+        return "r" + n + "," + left + "," + up +","+width + "," + height;
     }
 
     public static void main(String[] Args) throws IOException {
@@ -38,7 +36,7 @@ public class generateP1Data {
         FileOutputStream fos1 = new FileOutputStream(fout1);
         BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(fos1));
         // 100MB we need 11000000
-        for (int i = 1; i <= 11000000; i++) {
+        for (int i = 1; i <= 110000; i++) {
             bw1.write(a.RandomCoordinates());
             bw1.newLine();
         }
@@ -48,7 +46,7 @@ public class generateP1Data {
         FileOutputStream fos2 = new FileOutputStream(fout2);
         BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(fos2));
         // 100MB we need 4000000
-        for (int i = 1; i <= 4000000; i++) {
+        for (int i = 1; i <= 40000; i++) {
             bw2.write(a.RandomRectangle(i));
             bw2.newLine();
         }

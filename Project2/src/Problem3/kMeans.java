@@ -111,7 +111,7 @@ public class kMeans {
         String output = args[1];
         String file_name = "part-r-00000";
         boolean converge = false;
-        for (int i=1;i<=50;i++) {
+        for (int i=1;i<=5;i++) {
             if (converge == false){
                 if (i == 1) {
                     List<String> a = getRandomCentroids(args[0]);

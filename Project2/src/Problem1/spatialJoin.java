@@ -26,7 +26,7 @@ public class spatialJoin {
             int w_x_2 = 10000;
             int w_y_1 = 0;
             int w_y_2 = 10000;
-            if (!(ws.equals(null))){
+            if (!(ws.equals("null"))){
                 String[] windows = ws.split(",");
                 w_x_1 = Integer.valueOf(windows[0]);
                 w_x_2 = Integer.valueOf(windows[2]);
@@ -35,10 +35,12 @@ public class spatialJoin {
             }
             String[] data = value.toString().split(",");
             if (data.length == 5) {
+                // x_1 left x_2 right
                 int x_1 = Integer.valueOf(data[1]);
-                int x_2 = Integer.valueOf(data[3]);
-                int y_1 = Integer.valueOf(data[2]);
-                int y_2 = Integer.valueOf(data[4]);
+                int x_2 = Integer.valueOf(data[1])+Integer.valueOf(data[3]);
+                // y_1 down y_2 up
+                int y_1 = Integer.valueOf(data[2])-Integer.valueOf(data[4]);
+                int y_2 = Integer.valueOf(data[2]);
                 // divide the rectangles to the different regions
                 for (int i=(int)Math.floor(x_1/100);i<=(int)Math.floor(x_2/100);i++) {
                     for (int j=(int)Math.floor(y_1/100);j<=(int)Math.floor(y_2/100);j++)
@@ -71,16 +73,16 @@ public class spatialJoin {
                     P.add(str);
                 }
             }
-//            System.out.println(key.toString());
-//            System.out.println(P.size());
-//            System.out.println(R.size());
+            System.out.println(key.toString());
+            System.out.println(P.size());
+            System.out.println(R.size());
             for (String r:R) {
                 String[] temp_r = r.split(",");
                 String name = temp_r[0];
                 int X_1 = Integer.valueOf(temp_r[1]);
-                int Y_1 = Integer.valueOf(temp_r[2]);
-                int X_2 = Integer.valueOf(temp_r[3]);
-                int Y_2 = Integer.valueOf(temp_r[4]);
+                int Y_1 = Integer.valueOf(temp_r[2])-Integer.valueOf(temp_r[4]);
+                int X_2 = Integer.valueOf(temp_r[1])+Integer.valueOf(temp_r[3]);
+                int Y_2 = Integer.valueOf(temp_r[2]);
                 for (String p:P) {
                     String[] temp_p = p.split(",");
                     int x = Integer.valueOf(temp_p[0]);
@@ -100,7 +102,7 @@ public class spatialJoin {
         if (args.length != 3) {
             conf.set("Window",args[3]+","+args[4]+","+args[5]+","+args[6]);
         } else {
-            conf.set("Window",null);
+            conf.set("Window","null");
         }
         Job job = Job.getInstance(conf, "spatialJoin");
         job.setJarByClass(spatialJoin.class);
