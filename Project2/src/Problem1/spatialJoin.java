@@ -73,9 +73,6 @@ public class spatialJoin {
                     P.add(str);
                 }
             }
-            System.out.println(key.toString());
-            System.out.println(P.size());
-            System.out.println(R.size());
             for (String r:R) {
                 String[] temp_r = r.split(",");
                 String name = temp_r[0];
