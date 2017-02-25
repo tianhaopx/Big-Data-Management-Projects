@@ -6,6 +6,7 @@ import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
@@ -126,36 +127,34 @@ public class CustomInput {
         }
     }
 
-    public static class JsonMap extends Mapper<Text, Text, Text, Text> {
+    public static class JsonMap extends Mapper<Text, Text, Text, IntWritable> {
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-            String line = value.toString();
-            context.write(key, value);
+            String[] line = value.toString().split(",");
+            IntWritable count = new IntWritable(1);
+            context.write(new Text(line[5].split(":")[1]), count);
 
         }
     }
 
-    //    public static class JsonReduce extends Reducer<Text, Text, Text, Text> {
-//        public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
-//            int sumFemale = 0;
-//            int sumMale = 0;
-//            while (values.iterator().hasNext()) {
-//                if (values.iterator().next().toString().equalsIgnoreCase("female")) {
-//                    sumFemale = sumFemale + 1;
-//                } else {
-//                    sumMale = sumMale + 1;
-//                }
-//                output.collect(key, new Text("Number of Males: " + sumMale + " ; Number of Females: " + sumFemale));
-//            }
-//        }
-//    }
+    public static class JsonReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+        public void reduce(Text key, Iterable<IntWritable> value, Context context) throws IOException,
+                InterruptedException {
+            int sum = 0;
+            for (IntWritable val : value) {
+                sum += val.get();
+            }
+            context.write(key, new IntWritable(sum));
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "CustomInput");
         job.setJarByClass(CustomInput.class);
         job.setMapperClass(JsonMap.class);
-//        job.setReducerClass(JsonReduce.class);
+        job.setReducerClass(JsonReduce.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
         job.setInputFormatClass(JSONInput.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
