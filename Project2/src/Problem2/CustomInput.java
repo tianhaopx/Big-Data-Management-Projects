@@ -52,8 +52,6 @@ public class CustomInput {
             Text line = lineRecordReader.getCurrentValue();
             String str = line.toString();
             if (str.contains("}") || str.contains("},")) {
-                System.out.println(Integer.toString(count));
-                System.out.println("====================");
                 key = new Text(Integer.toString(count));
                 value = new Text(temp_value.replaceAll("\"",""));
                 count++;
@@ -96,9 +94,6 @@ public class CustomInput {
 
     public static class JsonMap extends Mapper<Text, Text, Text, Text> {
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-            System.out.println(key.toString());
-            System.out.println(value.toString());
-            System.out.println("====================");
             String line = value.toString();
             context.write(key,value);
 

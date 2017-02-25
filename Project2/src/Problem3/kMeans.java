@@ -56,7 +56,7 @@ public class kMeans {
                 mean_y += Double.valueOf(data[1]);
                 count += 1;
             }
-            context.write(key, new Text(Double.toString(mean_x/count)+","+Double.toString(mean_y/count)));
+            context.write(key, new Text(Double.toString(mean_x)+","+Double.toString(mean_y)+","+Double.toString(count)));
         }
     }
 
@@ -69,7 +69,7 @@ public class kMeans {
                 String[] data = str.toString().split(",");
                 mean_x += Double.valueOf(data[0]);
                 mean_y += Double.valueOf(data[1]);
-                count += 1;
+                count += Double.valueOf(data[2]);
             }
             context.write(new Text(Double.toString(mean_x/count)+","+Double.toString(mean_y/count)), NullWritable.get());
         }
@@ -111,7 +111,7 @@ public class kMeans {
         String output = args[1];
         String file_name = "part-r-00000";
         boolean converge = false;
-        for (int i=1;i<=5;i++) {
+        for (int i=1;i<=50;i++) {
             if (converge == false){
                 if (i == 1) {
                     List<String> a = getRandomCentroids(args[0]);
@@ -130,6 +130,7 @@ public class kMeans {
                 conf.set("C2",c2);
                 Path temp_out = new Path(output+"output_"+Integer.toString(i)+"/");
                 Job job = Job.getInstance(conf, "kMeans");
+                job.setNumReduceTasks(1);
                 job.setJarByClass(kMeans.class);
                 job.setMapperClass(kMeansMapper.class);
                 job.setCombinerClass(kMeansCombiner.class);
