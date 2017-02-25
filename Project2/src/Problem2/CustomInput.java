@@ -2,16 +2,24 @@ package Problem2;
 
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 import org.apache.hadoop.mapreduce.lib.input.LineRecordReader;
+import org.apache.hadoop.mapreduce.lib.input.NLineInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.LineReader;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by test on 2/19/17.
@@ -19,12 +27,38 @@ import java.io.IOException;
 public class CustomInput {
 
     public static class JSONInput extends FileInputFormat<Text, Text> {
-        public RecordReader<Text, Text> createRecordReader(InputSplit split, TaskAttemptContext context) throws IOException, InterruptedException {
+        public RecordReader<Text, Text> createRecordReader(InputSplit split, TaskAttemptContext context) throws
+                IOException, InterruptedException {
             JSONRecordReader reader = new JSONRecordReader();
-            reader.initialize(split,context);
+            reader.initialize(split, context);
             return reader;
         }
 
+        @Override
+        public List<InputSplit> getSplits(JobContext job) throws IOException {
+            int splitNum = 5;
+            int numLinePerSplit = 15;
+            Configuration conf = job.getConfiguration();
+            List<InputSplit> splits = new ArrayList<>();
+            for (FileStatus status : listStatus(job)) {
+                Path fileName = status.getPath();
+                FileSystem fs = fileName.getFileSystem(conf);
+                LineReader lr = null;
+                FSDataInputStream in = fs.open(fileName);
+                lr = new LineReader(in, conf);
+                Text line = new Text();
+                int numLines = 0;
+                while (lr.readLine(line) > 0) {
+                    numLines++;
+                }
+                int numOfBlock = numLines / numLinePerSplit / splitNum + 1;
+                int length = numLinePerSplit * numOfBlock;
+                splits.addAll(NLineInputFormat.getSplitsForFile(status, conf, length));
+//                System.out.println("*******" + splits.toString());
+            }
+
+            return splits;
+        }
     }
 
     public static class JSONRecordReader extends RecordReader<Text, Text> {
@@ -53,13 +87,13 @@ public class CustomInput {
             String str = line.toString();
             if (str.contains("}") || str.contains("},")) {
                 key = new Text(Integer.toString(count));
-                value = new Text(temp_value.replaceAll("\"",""));
+                value = new Text(temp_value.replaceAll("\"", ""));
                 count++;
                 temp_value = "";
                 return true;
             }
 
-            String arr = str.replaceAll("\\s+","");
+            String arr = str.replaceAll("\\s+", "");
             if (!arr.equals("{")) {
                 temp_value += arr;
             }
@@ -95,11 +129,12 @@ public class CustomInput {
     public static class JsonMap extends Mapper<Text, Text, Text, Text> {
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
-            context.write(key,value);
+            context.write(key, value);
 
         }
     }
-//    public static class JsonReduce extends Reducer<Text, Text, Text, Text> {
+
+    //    public static class JsonReduce extends Reducer<Text, Text, Text, Text> {
 //        public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
 //            int sumFemale = 0;
 //            int sumMale = 0;
@@ -125,7 +160,7 @@ public class CustomInput {
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
-        }
+    }
 
 
 }
