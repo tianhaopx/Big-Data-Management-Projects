@@ -120,9 +120,9 @@ public class kMeans {
         Integer k = Integer.valueOf(args[2]);
         String file_name = "part-r-00000";
         boolean converge = false;
-        for (int i=1;i<=50;i++) {
+        for (int i=1;i<=5;i++) {
             // if we converge
-            if (converge == false){
+            if (!converge){
                 // for the 1 time, we generate some random centroids
                 if (i == 1) {
                     List<String> a = getRandomCentroids(args[0],k);

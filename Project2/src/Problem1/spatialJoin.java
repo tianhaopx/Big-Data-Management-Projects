@@ -46,19 +46,19 @@ public class spatialJoin {
                     for (int j=(int)Math.floor(y_1/100);j<=(int)Math.floor(y_2/100);j++)
                         if (x_1 >= w_x_1 && x_1 <= w_x_2 && y_1 >= w_y_1 && y_1 <= w_y_2) {
                             // down left rectangle inside the window
-                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value.toString()));
                         }else if (x_1 >= w_x_1 && x_1 <= w_x_2 && y_2 >= w_y_1 && y_2 <= w_y_2){
                             // up left rectangle inside the window
-                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
-                        }else if (x_2 >= w_x_2 && x_2 <= w_x_2 && y_1 >= w_y_1 && y_1 <= w_y_2){
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value.toString()));
+                        }else if (x_2 >= w_x_1 && x_2 <= w_x_2 && y_1 >= w_y_1 && y_1 <= w_y_2){
                             // down right rectangle inside the window
-                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value.toString()));
                         }else if (x_2 >= w_x_1 && x_2 <= w_x_2 && y_2 >= w_y_1 && y_2 <= w_y_2){
                             // down right rectangle inside the window
-                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value.toString()));
                         }else if (x_1 <= w_x_1 && x_2 >= w_x_2 && y_1 <= w_y_1 && y_2 >= w_y_2) {
                             // window inside the rectangle
-                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value.toString()));
                         }
                 }
             } else {
