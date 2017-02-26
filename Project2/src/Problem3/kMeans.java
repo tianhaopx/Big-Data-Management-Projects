@@ -82,7 +82,7 @@ public class kMeans {
                 mean_y += Double.valueOf(data[1]);
                 count += Double.valueOf(data[2]);
             }
-            context.write(key,new Text(Double.toString(mean_x/count)+","+Double.toString(mean_y/count)));
+            context.write(key,new Text(String.format("%.3f",mean_x/count)+","+String.format("%.3f",mean_y/count)));
         }
     }
 
@@ -126,7 +126,7 @@ public class kMeans {
         }
         String file_name = "part-r-00000";
         boolean converge = false;
-        for (int i=1;i<=50;i++) {
+        for (int i=1;i<=5;i++) {
             // if we converge
             if (!converge){
                 // for the 1 time, we generate some random centroids
