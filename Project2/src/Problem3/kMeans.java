@@ -175,6 +175,7 @@ public class kMeans {
                         converge = true;
                     } else {
                         converge = false;
+                        break;
                     }
                 }
             } else {
