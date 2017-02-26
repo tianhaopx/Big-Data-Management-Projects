@@ -58,9 +58,9 @@ public class kMeans {
 
     public static class kMeansCombiner extends Reducer<Text,Text,Text,Text> {
         public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
-            int mean_x = 0;
-            int mean_y = 0;
-            int count = 0;
+            double mean_x = 0;
+            double mean_y = 0;
+            double count = 0;
             for (Text str:value) {
                 String[] data = str.toString().split(",");
                 mean_x += Double.valueOf(data[0]);
@@ -73,9 +73,9 @@ public class kMeans {
 
     public static class kMeansReducer extends Reducer<Text,Text,Text,Text> {
         public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
-            int mean_x = 0;
-            int mean_y = 0;
-            int count = 0;
+            double mean_x = 0;
+            double mean_y = 0;
+            double count = 0;
             for (Text str:value) {
                 String[] data = str.toString().split(",");
                 mean_x += Double.valueOf(data[0]);
@@ -118,9 +118,15 @@ public class kMeans {
         String input = args[0];
         String output = args[1];
         Integer k = Integer.valueOf(args[2]);
+        Double cov;
+        if (args.length == 4) {
+            cov = Double.valueOf(args[3]);
+        } else {
+            cov = 0.5;
+        }
         String file_name = "part-r-00000";
         boolean converge = false;
-        for (int i=1;i<=5;i++) {
+        for (int i=1;i<=50;i++) {
             // if we converge
             if (!converge){
                 // for the 1 time, we generate some random centroids
@@ -171,7 +177,13 @@ public class kMeans {
                 List<String> CurrC = getCentroids(output+"output_"+Integer.toString(i)+"/"+file_name);
                 for (int j=0;j<CurrC.size();j++){
                     String[] centroids = CurrC.get(j).split(",");
-                    if (centroids[0].equals(centroids[2]) && centroids[1].equals(centroids[3])){
+                    double old_x = Double.valueOf(centroids[0]);
+                    double old_y = Double.valueOf(centroids[1]);
+                    double new_x = Double.valueOf(centroids[2]);
+                    double new_y = Double.valueOf(centroids[3]);
+                    double diff_x = Math.abs(old_x-new_x);
+                    double diff_y = Math.abs(old_y-new_y);
+                    if (diff_x <= cov && diff_y <= cov){
                         converge = true;
                     } else {
                         converge = false;
