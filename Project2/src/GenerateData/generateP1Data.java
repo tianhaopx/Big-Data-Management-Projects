@@ -36,7 +36,7 @@ public class generateP1Data {
         FileOutputStream fos1 = new FileOutputStream(fout1);
         BufferedWriter bw1 = new BufferedWriter(new OutputStreamWriter(fos1));
         // 100MB we need 11000000
-        for (int i = 1; i <= 110000; i++) {
+        for (int i = 1; i <= 11000000; i++) {
             bw1.write(a.RandomCoordinates());
             bw1.newLine();
         }
@@ -46,7 +46,7 @@ public class generateP1Data {
         FileOutputStream fos2 = new FileOutputStream(fout2);
         BufferedWriter bw2 = new BufferedWriter(new OutputStreamWriter(fos2));
         // 100MB we need 4000000
-        for (int i = 1; i <= 40000; i++) {
+        for (int i = 1; i <= 4000000; i++) {
             bw2.write(a.RandomRectangle(i));
             bw2.newLine();
         }

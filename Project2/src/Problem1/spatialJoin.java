@@ -44,9 +44,22 @@ public class spatialJoin {
                 // divide the rectangles to the different regions
                 for (int i=(int)Math.floor(x_1/100);i<=(int)Math.floor(x_2/100);i++) {
                     for (int j=(int)Math.floor(y_1/100);j<=(int)Math.floor(y_2/100);j++)
-                        if (x_1 >= w_x_1 && x_2 <= w_x_2 && y_1 >= w_y_1 && y_2 <= w_y_2) {
+                        if (x_1 >= w_x_1 && x_1 <= w_x_2 && y_1 >= w_y_1 && y_1 <= w_y_2) {
+                            // down left rectangle inside the window
                             context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
-                    }
+                        }else if (x_1 >= w_x_1 && x_1 <= w_x_2 && y_2 >= w_y_1 && y_2 <= w_y_2){
+                            // up left rectangle inside the window
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                        }else if (x_2 >= w_x_2 && x_2 <= w_x_2 && y_1 >= w_y_1 && y_1 <= w_y_2){
+                            // down right rectangle inside the window
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                        }else if (x_2 >= w_x_1 && x_2 <= w_x_2 && y_2 >= w_y_1 && y_2 <= w_y_2){
+                            // down right rectangle inside the window
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                        }else if (x_1 <= w_x_1 && x_2 >= w_x_2 && y_1 <= w_y_1 && y_2 >= w_y_2) {
+                            // window inside the rectangle
+                            context.write(new Text(Integer.toString(i)+"_"+Integer.toString(j)),new Text(value));
+                        }
                 }
             } else {
                 // divide the points to the different regions
@@ -96,7 +109,7 @@ public class spatialJoin {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        if (args.length != 3) {
+        if (args.length == 7) {
             conf.set("Window",args[3]+","+args[4]+","+args[5]+","+args[6]);
         } else {
             conf.set("Window","null");

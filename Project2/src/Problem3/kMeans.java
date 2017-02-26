@@ -25,22 +25,33 @@ public class kMeans {
     public static class kMeansMapper extends Mapper<LongWritable, Text, Text, Text> {
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
             Configuration conf = context.getConfiguration();
-            String[] c1 = conf.get("C1").split(",");
-            String[] c2 = conf.get("C2").split(",");
+            Integer K = Integer.valueOf(conf.get("K"));
+
             String[] data = value.toString().split(",");
-            double c1_x = Double.valueOf(c1[0]);
-            double c1_y = Double.valueOf(c1[1]);
-            double c2_x = Double.valueOf(c2[0]);
-            double c2_y = Double.valueOf(c2[1]);
             double cur_x = Double.valueOf(data[0]);
             double cur_y = Double.valueOf(data[1]);
-            double dis1 = Math.sqrt(Math.pow(cur_x - c1_x,2)+Math.pow(cur_y - c1_y,2));
-            double dis2 = Math.sqrt(Math.pow(cur_x - c2_x,2)+Math.pow(cur_y - c2_y,2));
-            if (dis1 > dis2) {
-                context.write(new Text(conf.get("C1")),new Text(value));
-            } else {
-                context.write(new Text(conf.get("C2")),new Text(value));
+
+
+            List<Double> ans = new ArrayList<Double>();
+            ans.add(Double.POSITIVE_INFINITY);
+            ans.add((double)1);
+
+            // read all the centroids from the setting
+            // and compare to get the close one
+            for (int i=0;i<K;i++){
+                String[] temp = conf.get("C"+Integer.toString(i)).split(",");
+                double temp_x = Double.valueOf(temp[0]);
+                double temp_y = Double.valueOf(temp[1]);
+                double dis = Math.sqrt(Math.pow(cur_x - temp_x,2)+Math.pow(cur_y - temp_y,2));
+
+                if (dis<ans.get(0)) {
+                    ans.set(0,dis);
+                    ans.set(1,(double)i);
+                }
             }
+
+            context.write(new Text(conf.get("C"+Integer.toString(ans.get(1).intValue()))),new Text(value));
+
 
         }
     }
@@ -60,7 +71,7 @@ public class kMeans {
         }
     }
 
-    public static class kMeansReducer extends Reducer<Text,Text,Text,NullWritable> {
+    public static class kMeansReducer extends Reducer<Text,Text,Text,Text> {
         public void reduce(Text key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
             int mean_x = 0;
             int mean_y = 0;
@@ -71,11 +82,11 @@ public class kMeans {
                 mean_y += Double.valueOf(data[1]);
                 count += Double.valueOf(data[2]);
             }
-            context.write(new Text(Double.toString(mean_x/count)+","+Double.toString(mean_y/count)), NullWritable.get());
+            context.write(key,new Text(Double.toString(mean_x/count)+","+Double.toString(mean_y/count)));
         }
     }
 
-    public static List<String> getRandomCentroids(String f) throws Exception{
+    public static List<String> getRandomCentroids(String f, Integer n) throws Exception{
         List<String> temp = new ArrayList<String>();
         List<String> ret = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(f));
@@ -84,7 +95,7 @@ public class kMeans {
             temp.add(line);
         }
         Random centroids = new Random();
-        for (int i=1;i<=2;i++) {
+        for (int i=1;i<=n;i++) {
             int index = centroids.nextInt(temp.size());
             ret.add(temp.get(index));
         }
@@ -103,46 +114,68 @@ public class kMeans {
     }
 
     public static void main(String[] args) throws Exception{
-        String c1;
-        String c2;
-        String prev_x = "";
-        String prev_y = "";
+        List<String> c = new ArrayList<String>();
         String input = args[0];
         String output = args[1];
+        Integer k = Integer.valueOf(args[2]);
         String file_name = "part-r-00000";
         boolean converge = false;
         for (int i=1;i<=50;i++) {
+            // if we converge
             if (converge == false){
+                // for the 1 time, we generate some random centroids
                 if (i == 1) {
-                    List<String> a = getRandomCentroids(args[0]);
-                    c1 = a.toArray()[0].toString();
-                    c2 = a.toArray()[1].toString();
+                    List<String> a = getRandomCentroids(args[0],k);
+                    for (int j=0;j<a.size();j++) {
+                        c.add(a.toArray()[j].toString());
+                    }
                 } else {
                     String last_out = output+"output_"+Integer.toString(i-1)+"/"+file_name;
                     List<String> PrevC = getCentroids(last_out);
-                    c1 = PrevC.toArray()[0].toString();
-                    c2 = PrevC.toArray()[1].toString();
-                    prev_x = c1;
-                    prev_y = c2;
+
+                    for (int j=0;j<PrevC.size();j++) {
+
+                        String temp_x = PrevC.toArray()[j].toString().split(",")[2];
+                        String temp_y = PrevC.toArray()[j].toString().split(",")[3];
+                        c.add(temp_x+","+temp_y);
+                    }
+
                 }
                 Configuration conf = new Configuration();
-                conf.set("C1",c1);
-                conf.set("C2",c2);
+                conf.set("mapred.textoutputformat.separator", ",");
+                conf.set("K",Integer.toString(k));
+
+                for (int j=0;j<c.size();j++){
+                    conf.set("C"+Integer.toString(j),c.get(j));
+                }
+                c.clear();
+
+
                 Path temp_out = new Path(output+"output_"+Integer.toString(i)+"/");
+
                 Job job = Job.getInstance(conf, "kMeans");
+
                 job.setNumReduceTasks(1);
                 job.setJarByClass(kMeans.class);
+
                 job.setMapperClass(kMeansMapper.class);
                 job.setCombinerClass(kMeansCombiner.class);
                 job.setReducerClass(kMeansReducer.class);
+
                 job.setOutputKeyClass(Text.class);
                 job.setOutputValueClass(Text.class);
+
                 FileInputFormat.addInputPath(job, new Path(input));
                 FileOutputFormat.setOutputPath(job, temp_out);
                 job.waitForCompletion(true);
                 List<String> CurrC = getCentroids(output+"output_"+Integer.toString(i)+"/"+file_name);
-                if (prev_x.equals(CurrC.toArray()[0].toString()) && prev_y.equals(CurrC.toArray()[1].toString())) {
-                    converge = true;
+                for (int j=0;j<CurrC.size();j++){
+                    String[] centroids = CurrC.get(j).split(",");
+                    if (centroids[0].equals(centroids[2]) && centroids[1].equals(centroids[3])){
+                        converge = true;
+                    } else {
+                        converge = false;
+                    }
                 }
             } else {
                 System.out.println("We Converge!");
