@@ -7,10 +7,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InterruptedIOException;
+import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +43,7 @@ public class P3M extends Mapper<LongWritable, Text, Text, Text> {
             }
         }
         System.out.println(c.size());
-        System.out.print("==============================");
+        System.out.println("==============================");
     }
 
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -75,8 +72,8 @@ public class P3M extends Mapper<LongWritable, Text, Text, Text> {
                 ans.set(1,(double)i);
             }
         }
-        System.out.print(c.size());
-        System.out.print("==============================");
+        System.out.println(c.size());
+        System.out.println("==============================");
         context.write(new Text(c.get((ans.get(1).intValue()))),new Text(value));
 
 

@@ -24,7 +24,7 @@ public class generateP3Data {
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         // 100MB we need 11000000
-        for (int i = 1; i <= 11000000; i++) {
+        for (int i = 1; i <= 1100; i++) {
             bw.write(a.RandomCoordinates());
             bw.newLine();
         }

@@ -30,6 +30,7 @@ public class P3 extends Configured implements Tool {
         while ((line = br.readLine())!=null) {
             ret.add(line);
         }
+        br.close();
         return ret;
     }
 
@@ -37,9 +38,10 @@ public class P3 extends Configured implements Tool {
     public void writeDistributedCache(Path f, List<String> data) throws Exception{
         FileSystem fs = FileSystem.get(new Configuration());
         BufferedWriter br=new BufferedWriter(new OutputStreamWriter(fs.create(f,true)));
-        for (int i=1;i<=data.size();i++) {
+        for (int i=0;i<data.size();i++) {
             String[] temp = data.get(i).split(",");
             br.write(temp[2]+","+temp[3]);
+            br.newLine();
         }
         br.close();
     }
@@ -51,7 +53,7 @@ public class P3 extends Configured implements Tool {
     }
 
     public int run(String[] args) throws Exception {
-        String DistributeCachePath = "/user/test/kCenters";
+        String DistributeCachePath = "Project2/input/kCenters";
         String input = args[0];
         String output = args[1];
         Double cov;
