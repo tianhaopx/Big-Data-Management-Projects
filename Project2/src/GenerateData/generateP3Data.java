@@ -19,12 +19,12 @@ public class generateP3Data {
     }
 
     public static void main(String[] Args) throws IOException {
-        generateP1Data a = new generateP1Data();
+        generateP3Data a = new generateP3Data();
         String fout = "Project2/input/kmeans";
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
         // 100MB we need 11000000
-        for (int i = 1; i <= 1100; i++) {
+        for (int i = 1; i <= 11000000; i++) {
             bw.write(a.RandomCoordinates());
             bw.newLine();
         }

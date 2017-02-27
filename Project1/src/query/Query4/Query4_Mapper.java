@@ -4,6 +4,8 @@ import org.apache.hadoop.filecache.DistributedCache;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.io.InterruptedIOException;
 import java.net.URI;
 import java.util.HashMap;
 
-public class Query4_Mapper extends org.apache.hadoop.mapreduce.Mapper<LongWritable, Text, Text, Text> {
+public class Query4_Mapper extends Mapper<LongWritable, Text, Text, Text> {
 
         private static HashMap<String, String> CustomerMap = new HashMap<String, String>();
         private static HashMap<String, String> CountryMap = new HashMap<String, String>();
