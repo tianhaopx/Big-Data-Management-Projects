@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class P3M extends Mapper<LongWritable, Text, Text, Text> {
 
-    private static List<String> c = new ArrayList<String>();
+    private List<String> c = new ArrayList<String>();
     private BufferedReader brReader;
 
     public void setup(Context context) throws IOException, InterruptedIOException {

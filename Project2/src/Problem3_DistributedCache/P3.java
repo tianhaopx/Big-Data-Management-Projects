@@ -37,7 +37,7 @@ public class P3 extends Configured implements Tool {
 
     public void writeDistributedCache(Path f, List<String> data) throws Exception{
         FileSystem fs = FileSystem.get(new Configuration());
-        BufferedWriter br=new BufferedWriter(new OutputStreamWriter(fs.create(f,true)));
+        BufferedWriter br=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f.toString())));
         for (int i=0;i<data.size();i++) {
             String[] temp = data.get(i).split(",");
             br.write(temp[2]+","+temp[3]);
