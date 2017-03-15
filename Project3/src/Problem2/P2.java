@@ -9,7 +9,6 @@ import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFlatMapFunction;
 import scala.Tuple2;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -38,12 +37,11 @@ public class P2 {
                 //if the cell in the top left
                 if (cell == 1) {
                     // 3 neighbor 2,501,502
-                    //  _______
                     // |1  |2  |
                     // |501|502|
                     for (int i:new int[] {1,2,501,502}){
                         if (i==1){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -57,7 +55,7 @@ public class P2 {
                     // |249501  |249502  |
                     for (int i:new int[] {249501,249001,249002,249502}){
                         if (i==249501){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -71,7 +69,7 @@ public class P2 {
                     // |999  |1000  |
                     for (int i:new int[] {500,499,999,1000}){
                         if (i==500){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -85,7 +83,7 @@ public class P2 {
                     // |249999  |250000  |
                     for (int i:new int[] {250000,249499,249500,249999}){
                         if (i==250000){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -96,9 +94,9 @@ public class P2 {
                 else if ((cell>1 && cell <500)) {
                     // |cell-1    |cell      |cell+1    |
                     // |cell+499  |cell+500  |cell+501  |
-                    for (int i:new int[] {cell,cell-1,cell+1,cell+499,cell+500,cell-1,cell+501}){
+                    for (int i:new int[] {cell,cell-1,cell+1,cell+499,cell+500,cell+501}){
                         if (i==cell){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -111,7 +109,7 @@ public class P2 {
                     // |cell-1      |cell          |cell+1      |
                     for (int i:new int[] {cell,cell-1,cell+1,cell-499,cell-500,cell-501}){
                         if (i==cell){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -125,7 +123,7 @@ public class P2 {
                     // |cell+500   |cell+501      |
                     for (int i:new int[] {cell,cell-500,cell-499,cell+1,cell+500,cell+501}){
                         if (i==cell){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -139,7 +137,7 @@ public class P2 {
                     // |cell+499   |cell+500      |
                     for (int i:new int[] {cell,cell-500,cell-501,cell-1,cell+500,cell+499}){
                         if (i==cell){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
@@ -153,7 +151,7 @@ public class P2 {
                     // |cell+499   |cell+500      |cell+501    |
                     for (int i:new int[] {cell,cell-1,cell+1,cell-501,cell-500,cell-499,cell+501,cell+500,cell+499}){
                         if (i==cell){
-                            list.add(new Tuple2<>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",0"));
                         } else {
                             list.add(new Tuple2<>(i,"0"+",1"));
                         }
