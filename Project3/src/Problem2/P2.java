@@ -32,29 +32,34 @@ public class P2 {
 
         class AssignCell implements PairFlatMapFunction<String[], Integer, String> {
             public Iterator<Tuple2<Integer,String>> call(String[] s){
-                ArrayList<Tuple2<Integer,String>> list = new ArrayList<Tuple2<Integer,String>>();
+                ArrayList<Tuple2<Integer,String>> list = new ArrayList<>();
                 int cell = (int)(Math.floor(Integer.valueOf(s[0])/20)+Math.floor(Math.abs(Integer.valueOf(s[1])-9999)/20)*500+1);
 
                 //if the cell in the top left
                 if (cell == 1) {
                     // 3 neighbor 2,501,502
+                    //  _______
+                    // |1  |2  |
+                    // |501|502|
                     for (int i:new int[] {1,2,501,502}){
                         if (i==1){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
                 }
                 //if the cell in the bottom left
                 else if (cell == 249501) {
-                    // 3 neighbor 249000,249001,249501
-                    for (int i:new int[] {249501,249000,249001,249501}){
+                    // 3 neighbor 249502,249001,249002
+                    // |249001  |249002  |
+                    // |249501  |249502  |
+                    for (int i:new int[] {249501,249001,249002,249502}){
                         if (i==249501){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
@@ -62,11 +67,13 @@ public class P2 {
                 // if the cell in the top right
                 else if (cell == 500) {
                     // 3 neighbor 499,999,1000
+                    // |499  |500   |
+                    // |999  |1000  |
                     for (int i:new int[] {500,499,999,1000}){
                         if (i==500){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
@@ -74,66 +81,81 @@ public class P2 {
                 // if the cell in the bottom right
                 else if (cell == 250000) {
                     // 3 neighbor 249499,249500,249999
+                    // |249499  |249500  |
+                    // |249999  |250000  |
                     for (int i:new int[] {250000,249499,249500,249999}){
                         if (i==250000){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
                 }
                 // if the cell on the top edge
                 else if ((cell>1 && cell <500)) {
+                    // |cell-1    |cell      |cell+1    |
+                    // |cell+499  |cell+500  |cell+501  |
                     for (int i:new int[] {cell,cell-1,cell+1,cell+499,cell+500,cell-1,cell+501}){
                         if (i==cell){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
                 }
                 // if the cell on the bottom edge
                 else if (cell>249501 && cell<250000) {
-                    for (int i:new int[] {cell,cell-1,cell+1,cell-499,cell-500,cell-1,cell-501}){
+                    // |cell-501    |cell-500      |cell-499    |
+                    // |cell-1      |cell          |cell+1      |
+                    for (int i:new int[] {cell,cell-1,cell+1,cell-499,cell-500,cell-501}){
                         if (i==cell){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
                 }
                 // if the cell on the left edge
-                else if (cell%500==1 && cell != 1 && cell != 249501){
+                else if (cell%500==1){
+                    // |cell-500   |cell-499      |
+                    // |cell       |cell+1        |
+                    // |cell+500   |cell+501      |
                     for (int i:new int[] {cell,cell-500,cell-499,cell+1,cell+500,cell+501}){
                         if (i==cell){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
                 }
                 // if the cell on the right edge
-                else if (cell%500==0 && cell != 500 && cell != 250000){
+                else if (cell%500==0){
+                    // |cell-501   |cell-500      |
+                    // |cell-1     |cell          |
+                    // |cell+499   |cell+500      |
                     for (int i:new int[] {cell,cell-500,cell-501,cell-1,cell+500,cell+499}){
                         if (i==cell){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
                 }
                 // the cell in the middle
                 else {
+                    // |cell-501   |cell-500      |cell-499    |
+                    // |cell-1     |cell          |cell+1      |
+                    // |cell+499   |cell+500      |cell+501    |
                     for (int i:new int[] {cell,cell-1,cell+1,cell-501,cell-500,cell-499,cell+501,cell+500,cell+499}){
                         if (i==cell){
-                            list.add(new Tuple2<Integer,String>(i,"1"+",1"));
+                            list.add(new Tuple2<>(i,"1"+",1"));
                         } else {
-                            list.add(new Tuple2<Integer,String>(i,"0"+",1"));
+                            list.add(new Tuple2<>(i,"0"+",1"));
                         }
                     }
                     return list.iterator();
