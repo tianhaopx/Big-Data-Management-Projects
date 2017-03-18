@@ -62,7 +62,7 @@ fabric.properties
 output/
 target/
 input/
-.idea/artifacts
+#.idea/artifacts
 META-INF/
 /.idea/deployment.xml
 /.idea/webServers.xml
