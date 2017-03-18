@@ -307,7 +307,10 @@ public class P2 {
         }
 
         // calculate the nodes in each cube
-        SparkConf conf = new SparkConf().setAppName("P2").setMaster("local");
+        // next line should be uncomment if your want to run locally
+        //SparkConf conf = new SparkConf().setAppName("P2").setMaster("local");
+        // next line shoud be uncooment if you want to run on cluster
+        SparkConf conf = new SparkConf().setAppName("P2");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String[]> coorFile = sc.textFile(args[0]).map(new GetSplit());
         JavaPairRDD<Integer, String> coordinates = coorFile
