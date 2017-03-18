@@ -63,6 +63,6 @@ output/
 target/
 input/
 #.idea/artifacts
-META-INF/
+#META-INF/
 /.idea/deployment.xml
 /.idea/webServers.xml
