@@ -51,7 +51,7 @@ public class P1 {
 
         // T6: Select the customer IDs whose  T5.count * 3 < T3 count
         result5 = result5.select(col("custID"), col("count").multiply(3).alias("count*3"));
-        Dataset<Row> result6 = result5.join(result3,result5.col("custID").equalTo(result3.col("custID")));
+        Dataset<Row> result6 = result5.join(result3,"custID");
         result6 = result6.filter(col("count*3").lt(col("count")));
         result6.show();
 
