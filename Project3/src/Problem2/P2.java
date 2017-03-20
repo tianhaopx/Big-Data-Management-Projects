@@ -21,7 +21,7 @@ public class P2 {
     static Double calDensity(Tuple2 s) {
         double ans;
         String[] temp = s._2.toString().split(",");
-        ans = Double.valueOf(temp[0]) / Double.valueOf(temp[1]);
+        ans = Double.valueOf(temp[0]) / (Double.valueOf(temp[1])/(Double.valueOf(temp[2])));
         return Double.valueOf(String.format("%.3f",ans));
     }
 
@@ -170,9 +170,9 @@ public class P2 {
                     // |501|502|
                     for (int i : new int[]{1, 2, 501, 502}) {
                         if (i == 1) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,3"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -184,9 +184,9 @@ public class P2 {
                     // |249501  |249502  |
                     for (int i : new int[]{249501, 249001, 249002, 249502}) {
                         if (i == 249501) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,3"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -198,9 +198,9 @@ public class P2 {
                     // |999  |1000  |
                     for (int i : new int[]{500, 499, 999, 1000}) {
                         if (i == 500) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,3"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -212,9 +212,9 @@ public class P2 {
                     // |249999  |250000  |
                     for (int i : new int[]{250000, 249499, 249500, 249999}) {
                         if (i == 250000) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,3"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -225,9 +225,9 @@ public class P2 {
                     // |cell+499  |cell+500  |cell+501  |
                     for (int i : new int[]{cell, cell - 1, cell + 1, cell + 499, cell + 500, cell + 501}) {
                         if (i == cell) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,5"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -238,9 +238,9 @@ public class P2 {
                     // |cell-1      |cell          |cell+1      |
                     for (int i : new int[]{cell, cell - 1, cell + 1, cell - 499, cell - 500, cell - 501}) {
                         if (i == cell) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,5"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -252,9 +252,9 @@ public class P2 {
                     // |cell+500   |cell+501      |
                     for (int i : new int[]{cell, cell - 500, cell - 499, cell + 1, cell + 500, cell + 501}) {
                         if (i == cell) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,5"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -266,9 +266,9 @@ public class P2 {
                     // |cell+499   |cell+500      |
                     for (int i : new int[]{cell, cell - 500, cell - 501, cell - 1, cell + 500, cell + 499}) {
                         if (i == cell) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,5"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -280,9 +280,9 @@ public class P2 {
                     // |cell+499   |cell+500      |cell+501    |
                     for (int i : new int[]{cell, cell - 1, cell + 1, cell - 501, cell - 500, cell - 499, cell + 501, cell + 500, cell + 499}) {
                         if (i == cell) {
-                            list.add(new Tuple2<>(i, "1" + ",0"));
+                            list.add(new Tuple2<>(i, "1" + ",0,8"));
                         } else {
-                            list.add(new Tuple2<>(i, "0" + ",1"));
+                            list.add(new Tuple2<>(i, "0" + ",1,0"));
                         }
                     }
                     return list.iterator();
@@ -296,7 +296,13 @@ public class P2 {
                 String[] temp2 = b.split(",");
                 int self_cell = Integer.valueOf(temp1[0]) + Integer.valueOf(temp2[0]);
                 int relative_cell = Integer.valueOf(temp1[1]) + Integer.valueOf(temp2[1]);
-                return self_cell + "," + relative_cell;
+                int relative_cell_count = 0;
+                if (Integer.valueOf(temp1[2]) != 0) {
+                    relative_cell_count = Integer.valueOf(temp1[2]);
+                } else if (Integer.valueOf(temp2[2]) != 0) {
+                    relative_cell_count = Integer.valueOf(temp2[2]);
+                }
+                return self_cell + "," + relative_cell+","+relative_cell_count;
             }
         }
 
@@ -308,9 +314,9 @@ public class P2 {
 
         // calculate the nodes in each cube
         // next line should be uncomment if your want to run locally
-        //SparkConf conf = new SparkConf().setAppName("P2").setMaster("local");
+        SparkConf conf = new SparkConf().setAppName("P2").setMaster("local");
         // next line shoud be uncooment if you want to run on cluster
-        SparkConf conf = new SparkConf().setAppName("P2");
+        // SparkConf conf = new SparkConf().setAppName("P2");
         JavaSparkContext sc = new JavaSparkContext(conf);
         JavaRDD<String[]> coorFile = sc.textFile(args[0]).map(new GetSplit());
         JavaPairRDD<Integer, String> coordinates = coorFile
@@ -322,6 +328,8 @@ public class P2 {
                 .mapToPair(coor -> new Tuple2<>(coor._1, calDensity(coor)))
                 .coalesce(1);
         List<Tuple2<Integer, Double>> topNResult = density.takeOrdered(50, MyTupleComparator.INSTANCE);
+
+        density.saveAsTextFile(args[1]+"/density");
 
         JavaRDD<Tuple2<Integer, Double>> temp = sc.parallelize(topNResult);
         JavaPairRDD<Integer, Double> ans = temp
