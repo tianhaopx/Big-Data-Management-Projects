@@ -7,6 +7,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFlatMapFunction;
+import org.apache.spark.api.java.function.PairFunction;
 import scala.Serializable;
 import scala.Tuple2;
 
@@ -19,12 +20,6 @@ import java.util.List;
  * Created by test on 3/18/17.
  */
 public class Step2 {
-    static Double calDensity(Tuple2 s) {
-        double ans;
-        String[] temp = s._2.toString().split(",");
-        ans = Double.valueOf(temp[0]) / (Double.valueOf(temp[1])/(Double.valueOf(temp[2])));
-        return Double.valueOf(String.format("%.3f",ans));
-    }
 
     static class MyTupleComparator implements Comparator<Tuple2<Integer, Double>>, Serializable {
         final static P2.MyTupleComparator INSTANCE = new P2.MyTupleComparator();
@@ -193,6 +188,17 @@ public class Step2 {
             }
         }
 
+        class CalDensity implements PairFunction<Tuple2<Integer, String>,Integer,Double> {
+            public Tuple2<Integer, Double> call(Tuple2 a) {
+                double ans;
+                String[] temp = a._2.toString().split(",");
+                ans = Double.valueOf(temp[0]) / (Double.valueOf(temp[1])/(Double.valueOf(temp[2])));
+                Tuple2<Integer, Double> ret = new Tuple2<>((int)a._1,Double.valueOf(String.format("%.3f",ans)));
+                return ret;
+            }
+        }
+
+
         // calculate the nodes in each cube
         SparkConf conf = new SparkConf().setAppName("Step2").setMaster("local");
         JavaSparkContext sc = new JavaSparkContext(conf);
@@ -204,7 +210,7 @@ public class Step2 {
 
         // report for the step2
         JavaPairRDD<Integer, Double> density = coordinates
-                .mapToPair(coor -> new Tuple2<>(coor._1, calDensity(coor)))
+                .mapToPair(new CalDensity())
                 .coalesce(1);
 
         density.saveAsObjectFile(args[1]+"/density");
