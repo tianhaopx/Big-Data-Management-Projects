@@ -1,3 +1,5 @@
+# ignore the .DS_store file in the MacOS
+.DS_store
 # ignore the iml files due to the different configuration
 *.iml
 
