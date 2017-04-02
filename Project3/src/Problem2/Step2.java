@@ -198,7 +198,6 @@ public class Step2 {
             }
         }
 
-
         // calculate the nodes in each cube
         SparkConf conf = new SparkConf().setAppName("Step2").setMaster("local");
         JavaSparkContext sc = new JavaSparkContext(conf);
