@@ -240,7 +240,7 @@ db.test.insertMany([{
     "awards": [
       {
         "award": "Award for the Advancement of Free Software",
-        "year": "2011",
+        "year": 2011,
         "by": "Free Software Foundation"
       }
     ]
@@ -354,19 +354,37 @@ db.test.update({"name": {"first": "Alex", "last": "Chen"}},{$push:{comments:{$ea
 // 9) For each contribution by “Alex Chen”, say X, list the peoples’ names (fisrt and last) who have contribution X.
 var contribs = db.test.find({"name": {"first": "Alex", "last": "Chen"}}, {contribs: 1, _id: 0}).toArray()
 var array = contribs[0].contribs
-var result = new Array(array.length)
-for (var i in array) {
+var result = []
+for (var i = 0; i < array.length; i++) {
   var x = array[i]
   var name = db.test.find({contribs: x}, {name: 1, _id: 0}).toArray()
-  result[i] = new Object()
+  result[i] = {}
   result[i].Contribution = x
-  result[i].People = new Array(name.length)
-  for (var j in name) {
+  result[i].People = []
+  for (var j = 0; j < name.length; j++) {
     result[i].People[j] = name[j].name
   }
 }
+result //show result
 
 // 10) Report all documents where the first name matches the regular expression “Jo*”, where “*” means any number of characters. Report the documents sorted by the last name.
 db.test.find({"name.first":{$regex:/^Jo/}}).sort({"name.last":1})
 
+// 11) Report the distinct organization that gave awards. This information can be found in the “by” field inside the “awards” array.
+db.test.distinct("awards.by")
 
+// 12) Delete from all documents the “death” field.
+db.test.updateMany({},{$unset:{death:""}})
+
+// 13) Delete from all documents any award given on 2011. Note: year in _id:8 was String
+db.test.updateMany({},{$pull:{awards:{year:2011}}})
+
+// 14) Update the award of document _id =30, which is given by WPI, and set the year to 1965.
+db.test.update({_id:30, "awards.by":"WPI"},{$set:{"awards.$.year":1965}})
+
+// 15) Add (copy) all the contributions of document _id = 3 to that of document _id = 30
+db.test.find({_id:3},{contribs:1, _id:0}).forEach(function (doc) {
+  db.test.update({_id:30},{$push:{contribs:{$each:doc.contribs}}})
+})
+
+//
