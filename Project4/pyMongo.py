@@ -68,7 +68,8 @@ print(db.bios.find_one({"name.first": "Guido", "name.last": "van Rossum"}))
 #    following comments: “He taught in 3 universities”, “died from cancer”, “lived in CA”
 print(db.bios.find_one({"name.first": "Alex", "name.last": "Chen"}))
 db.bios.update_one({"name.first": "Alex", "name.last": "Chen"},
-                   {"$push": {"comments": {"$each": ["He taught in 3 universities", "died from cancer", "lived in CA"]}}})
+                   {"$push": {
+                       "comments": {"$each": ["He taught in 3 universities", "died from cancer", "lived in CA"]}}})
 print(db.bios.find_one({"name.first": "Alex", "name.last": "Chen"}))
 
 # 9) For each contribution by “Alex Chen”, say X, list the peoples’ names (fisrt and last) who have
@@ -90,7 +91,7 @@ for n in ans:
 
 # 10) Report all documents where the first name matches the regular expression “Jo*”, where “*” means any
 #     number of characters. Report the documents sorted by the last name.
-ans = db.bios.find({"name.first":{"$regex":"^Jo"}})
+ans = db.bios.find({"name.first": {"$regex": "^Jo"}})
 for n in ans:
     print(n)
 
@@ -100,38 +101,39 @@ db.bios.aggregate([
     {"$unwind": "$awards"},
     {"$group": {"_id": "$awards.by"}}
 ])
+db.bios.distince("awards.by")
 
 # 12) Delete from all documents the “death” field.
 print(db.bios.count())
-db.bios.delete_many({"death":{"$exists":True}})
+db.bios.delete_many({"death": {"$exists": True}})
 print(db.bios.count())
 
 # 13) Delete from all documents any award given on 2011.
 print(db.bios.count())
 db.bios.delete_many({"$or":
-                        [{"awards.year":2011},
-                         {"awards.year":"2011"}
-                        ]})
+                         [{"awards.year": 2011},
+                          {"awards.year": "2011"}
+                          ]})
 print(db.bios.count())
 
 # 14) Update the award of document _id =30, which is given by WPI, and set the year to 1965.
-print(db.bios.find_one({"_id":30}))
-db.bios.update({"_id":30, "awards.by":"WPI"},{"$set": {"awards.$.year":1965}})
-print(db.bios.find_one({"_id":30}))
+print(db.bios.find_one({"_id": 30}))
+db.bios.update({"_id": 30, "awards.by": "WPI"}, {"$set": {"awards.$.year": 1965}})
+print(db.bios.find_one({"_id": 30}))
 
 # 15) Add (copy) all the contributions of document _id = 3 to that of document _id = 30
-temp = db.bios.find_one({"_id":3})['contribs']
-print(db.bios.find_one({"_id":30}))
+temp = db.bios.find_one({"_id": 3})['contribs']
+print(db.bios.find_one({"_id": 30}))
 for n in temp:
-    db.bios.update({"_id":30},{"$push": {"contribs": n}})
-print(db.bios.find_one({"_id":30}))
+    db.bios.update({"_id": 30}, {"$push": {"contribs": n}})
+print(db.bios.find_one({"_id": 30}))
 
 # 16) Report only the names (first and last) of those individuals who won at least two awards in 2001.
 ans = db.bios.aggregate([
     {"$unwind": "$awards"},
-    {"$match": {"awards.year":2001}},
+    {"$match": {"awards.year": 2001}},
     {"$group": {"_id": "$name", "awards": {"$sum": 1}}},
-    {"$match": {"awards":{"$gt":1}}},
+    {"$match": {"awards": {"$gt": 1}}},
     {"$group": {"_id": "$_id"}}
 ])
 for n in ans:
@@ -139,14 +141,14 @@ for n in ans:
 
 # 17) Report the document with the largest id. First, you need to find the largest _id (using a CRUD
 #     statement), and then use that to report the corresponding document.
-temp = db.bios.find_one({"$query":{},"$orderby":{"_id":-1}})
+temp = db.bios.find_one({"$query": {}, "$orderby": {"_id": -1}})
 
 # 18) Report only one document where one of the awards is given by “ACM”.
-ans = db.bios.find_one({"awards.by":"ACM"})
+ans = db.bios.find_one({"awards.by": "ACM"})
 
 # 19) Delete the documents inserted in Q3, i.e., _id = 20 and 30.
 print(db.bios.count())
-db.bios.delete_many({"_id":{"$in":[20,30]}})
+db.bios.delete_many({"_id": {"$in": [20, 30]}})
 print(db.bios.count())
 
 # 20) Report the number of documents in the collection.
