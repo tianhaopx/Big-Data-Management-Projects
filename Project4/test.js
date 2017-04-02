@@ -339,3 +339,34 @@ db.test.insertMany([{
 // 4) Report all documents of people who got a “Turing Award” after 1976
 db.test.find({awards:{"$elemMatch":{award: "Turing Award",year: {$gt: 1976}}}})
 
+// 5) Report all documents of people who got less than 3 awards or have contribution in “FP”
+db.test.find({$or:[{awards: {$exists: false}},{awards: {$size: 0}},{awards: {$size: 1}},{awards: {$size: 2}},{contribs:"FP"}]})
+
+// 6) Report the contributions of “Dennis Ritchie” (only report the name and the contribution array)
+db.test.find({"name": {"first": "Dennis", "last": "Ritchie"}},{name:1,contribs:1,_id:0})
+
+// 7) Update the document of “Guido van Rossum” to add “OOP” to the contribution list.
+db.test.update({"name": {"first": "Guido", "last": "van Rossum"}},{$push:{contribs:"OOP"}})
+
+// 8) Insert a new filed of type array, called “comments”, into the document of “Alex Chen” storing the following comments: “He taught in 3 universities”, “died from cancer”, “lived in CA”
+db.test.update({"name": {"first": "Alex", "last": "Chen"}},{$push:{comments:{$each:["He taught in 3 universities", "died from cancer","lived in CA"]}}})
+
+// 9) For each contribution by “Alex Chen”, say X, list the peoples’ names (fisrt and last) who have contribution X.
+var contribs = db.test.find({"name": {"first": "Alex", "last": "Chen"}}, {contribs: 1, _id: 0}).toArray()
+var array = contribs[0].contribs
+var result = new Array(array.length)
+for (var i in array) {
+  var x = array[i]
+  var name = db.test.find({contribs: x}, {name: 1, _id: 0}).toArray()
+  result[i] = new Object()
+  result[i].Contribution = x
+  result[i].People = new Array(name.length)
+  for (var j in name) {
+    result[i].People[j] = name[j].name
+  }
+}
+
+// 10) Report all documents where the first name matches the regular expression “Jo*”, where “*” means any number of characters. Report the documents sorted by the last name.
+db.test.find({"name.first":{$regex:/^Jo/}}).sort({"name.last":1})
+
+
