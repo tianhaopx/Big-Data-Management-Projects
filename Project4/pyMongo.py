@@ -5,18 +5,15 @@ from bson import json_util
 
 # creating the link
 client = MongoClient('localhost', 27017)
-# getting the database
 db = client.project4
-
-# if collection exist we delete
 db.bios.drop()
-# getting a collection & import the data
 collection = db.bios
 
 # using mongoimport to import the data
 # subprocess.call(["mongoimport", "--db", "project4", "--collection", "bios", "--drop", "--file", "/home/test/IdeaProjects/BigDataProjects/Project4/data_shell.json", "--jsonArray"])
 
 # you need to do somethind before you insert the data
+# 1) Insert the data
 with open("data_pymongo.json") as f:
     data = f.read()
 
@@ -28,6 +25,7 @@ print(db.bios.count())
 print(db.bios.find_one({"name.first": "John", "name.last": "McCarthy"}))
 temp = db.bios.find_one({"name.first": "John", "name.last": "McCarthy"})
 temp['_id'] = 2
+del temp['oid']
 db.bios.delete_many({"name.first": "John", "name.last": "McCarthy"})
 db.bios.insert(temp)
 print(db.bios.find_one({"name.first": "John", "name.last": "McCarthy"}))
@@ -50,7 +48,7 @@ ans = db.bios.find(
     {"$or":
         [
             {"contribs": "FP"},
-            {"awards.4": {"$exists": False}}
+            {"awards.2": {"$exists": False}}
         ]})
 for n in ans:
     print(n)
@@ -85,8 +83,7 @@ temp = db.bios.aggregate([
     {"$group": {"_id": "$contribs", "people": {"$addToSet": "$name"}}},
     {"$match": {"_id": {"$in": contributions}}}
 ])
-ans = temp.find({"_id": contributions})
-for n in ans:
+for n in temp:
     print(n)
 
 # 10) Report all documents where the first name matches the regular expression “Jo*”, where “*” means any
@@ -97,24 +94,17 @@ for n in ans:
 
 # 11) Report the distinct organization that gave awards. This information can be found in the “by” field
 #     inside the “awards” array. The output should be an array of the distinct values, e.g., [“wpi’, “acm’, ...]
-db.bios.aggregate([
-    {"$unwind": "$awards"},
-    {"$group": {"_id": "$awards.by"}}
-])
-db.bios.distince("awards.by")
+# db.bios.aggregate([
+#     {"$unwind": "$awards"},
+#     {"$group": {"_id": "$awards.by"}}
+# ])
+db.bios.distinct("awards.by")
 
 # 12) Delete from all documents the “death” field.
-print(db.bios.count())
-db.bios.delete_many({"death": {"$exists": True}})
-print(db.bios.count())
+db.bios.update({}, {"$unset": {"death": {}}}, multi=True)
 
 # 13) Delete from all documents any award given on 2011.
-print(db.bios.count())
-db.bios.delete_many({"$or":
-                         [{"awards.year": 2011},
-                          {"awards.year": "2011"}
-                          ]})
-print(db.bios.count())
+db.bios.update({}, {"$pull": {"awards": {"year": {"$in": [2011,'2011']}}}}, multi=True)
 
 # 14) Update the award of document _id =30, which is given by WPI, and set the year to 1965.
 print(db.bios.find_one({"_id": 30}))
