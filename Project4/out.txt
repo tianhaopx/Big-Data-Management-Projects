@@ -1,49 +1,9 @@
-
-#18
-{
-	"_id" : 1,
-	"name" : {
-		"first" : "John",
-		"last" : "Backus"
-	},
-	"birth" : ISODate("1924-12-03T05:00:00Z"),
-	"contribs" : [
-		"Fortran",
-		"ALGOL",
-		"Backus-Naur Form",
-		"FP"
-	],
-	"awards" : [
-		{
-			"award" : "W.W. McDowell Award",
-			"year" : 1967,
-			"by" : "IEEE Computer Society"
-		},
-		{
-			"award" : "National Medal of Science",
-			"year" : 1975,
-			"by" : "National Science Foundation"
-		},
-		{
-			"award" : "Turing Award",
-			"year" : 1977,
-			"by" : "ACM"
-		},
-		{
-			"award" : "Draper Prize",
-			"year" : 1993,
-			"by" : "National Academy of Engineering"
-		}
-	]
-}
-#19
-10
-#20
 MongoDB shell version v3.4.3
 connecting to: mongodb://127.0.0.1:27017
 MongoDB server version: 3.4.3
 #1
 10
+========
 #2
 {
 	"_id" : 2,
@@ -76,8 +36,10 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #3
 12
+========
 #4
 {
 	"_id" : 1,
@@ -206,6 +168,7 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #5
 {
 	"_id" : 1,
@@ -365,6 +328,7 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #6
 {
 	"name" : {
@@ -376,6 +340,7 @@ MongoDB server version: 3.4.3
 		"C"
 	]
 }
+========
 #7
 {
 	"_id" : 6,
@@ -401,6 +366,7 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #8
 {
 	"_id" : 20,
@@ -427,17 +393,18 @@ MongoDB server version: 3.4.3
 		"lived in CA"
 	]
 }
+========
 #9
 {
 	"_id" : "C++",
 	"people" : [
 		{
-			"first" : "Alex",
-			"last" : "Chen"
-		},
-		{
 			"first" : "David",
 			"last" : "Mark"
+		},
+		{
+			"first" : "Alex",
+			"last" : "Chen"
 		}
 	]
 }
@@ -458,6 +425,7 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #10
 {
 	"_id" : 1,
@@ -527,6 +495,7 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #11
 "ACM"
 "IEEE Computer Society"
@@ -544,10 +513,13 @@ MongoDB server version: 3.4.3
 "The Economist"
 "Inamori Foundation"
 "WPI"
+========
 #12
 12
+========
 #13
 12
+========
 #14
 {
 	"_id" : 30,
@@ -574,6 +546,7 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #15
 {
 	"_id" : 30,
@@ -604,9 +577,11 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #16
 { "_id" : { "first" : "Ole-Johan", "last" : "Dahl" } }
 { "_id" : { "first" : "Kristen", "last" : "Nygaard" } }
+========
 #17
 {
 	"_id" : ObjectId("51e062189c6ae665454e301d"),
@@ -632,6 +607,7 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #18
 {
 	"_id" : 1,
@@ -669,6 +645,10 @@ MongoDB server version: 3.4.3
 		}
 	]
 }
+========
 #19
 10
+========
 #20
+10
+========
