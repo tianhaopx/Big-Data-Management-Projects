@@ -187,8 +187,15 @@ print("========\t")
 # 17) Report the document with the largest id. First, you need to find the largest _id (using a CRUD
 #     statement), and then use that to report the corresponding document.
 print("#17")
-temp = db.bios.find_one({"$query": {}, "$orderby": {"_id": -1}},{"_id":1})
+print("Largest ID(include ObjectId type):\t")
+temp = db.bios.find_one({"$query": {}, "$orderby": {"_id": -1}}, {"_id": 1})
 print(temp)
+print("Largest ID(not include ObjectId type):\t")
+temp = db.bios.find({"$query": {}, "$orderby": {"_id": -1}}, {"_id": 1})
+for n in temp:
+    if type(n['_id']) == type(1):
+        print(n)
+        break
 print("========\t")
 
 # 18) Report only one document where one of the awards is given by “ACM”.

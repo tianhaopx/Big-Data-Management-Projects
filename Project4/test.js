@@ -99,7 +99,10 @@ print("========")
 
 // 17) Report the document with the largest id.
 print("#17")
+print("Largest ID(include ObjectId type)")
 db.test.find().sort({_id:-1}).limit(1).forEach(function(doc){printjson(doc)})
+print("Largest ID(not include ObjectId type)")
+db.test.find({_id:{$type:1}}).sort({_id:-1}).limit(1).forEach(function(doc){printjson(doc)})
 print("========")
 
 // 18) Report only one document where one of the awards is given by “ACM”.
