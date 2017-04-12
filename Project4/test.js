@@ -58,7 +58,7 @@ print("========")
 
 // 10) Report all documents where the first name matches the regular expression “Jo*”, where “*” means any number of characters. Report the documents sorted by the last name.
 print("#10")
-db.test.find({"name.first":{$regex:/^Jo/}}).sort({"name.last":1}).forEach(function(doc){printjson(doc)})
+db.test.find({"name.first":{$regex:"Jo*"}}).sort({"name.last":1}).forEach(function(doc){printjson(doc)})
 print("========")
 
 // 11) Report the distinct organization that gave awards. This information can be found in the “by” field inside the “awards” array.
@@ -68,14 +68,16 @@ print("========")
 
 // 12) Delete from all documents the “death” field.
 print("#12")
+print(db.test.find({death:{$exists:true}}).count())
 db.test.updateMany({},{$unset:{death:""}})
-print(db.test.count())
+print(db.test.find({death:{$exists:true}}).count())
 print("========")
 
 // 13) Delete from all documents any award given on 2011. Note: year in _id:8 was String
 print("#13")
+print(db.test.find({"awards.year":{$in:[2011,"2011"]}}).count())
 db.test.updateMany({},{$pull:{awards:{year:{$in:[2011, "2011"]}}}})
-print(db.test.count())
+print(db.test.find({"awards.year":{$in:[2011,"2011"]}}).count())
 print("========")
 
 // 14) Update the award of document _id =30, which is given by WPI, and set the year to 1965.
@@ -112,6 +114,7 @@ print("========")
 
 // 19) Delete the documents inserted in Q3, i.e., _id = 20 and 30.
 print("#19")
+print(db.test.count())
 db.test.remove({$or:[{_id:20},{_id:30}]})
 print(db.test.count())
 print("========")

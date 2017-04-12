@@ -1,0 +1,107 @@
+#1
+10
+========        
+#2
+Original Document:      
+{'_id': ObjectId('58eea828926fc434097f3fb4'), 'oid': '51df07b094c6acd67e492f41', 'awards': [{'award': 'Turing Award', 'by': 'ACM', 'year': 1971}, {'award': 'Kyoto Prize', 'by': 'Inamori Foundation', 'year': 1988}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1990}], 'contribs': ['Lisp', 'Artificial Intelligence', 'ALGOL'], 'name': {'first': 'John', 'last': 'McCarthy'}, 'birth': datetime.datetime(1927, 9, 4, 4, 0), 'death': datetime.datetime(2011, 12, 24, 5, 0)}
+New Documents:  
+{'_id': 2, 'awards': [{'award': 'Turing Award', 'by': 'ACM', 'year': 1971}, {'award': 'Kyoto Prize', 'by': 'Inamori Foundation', 'year': 1988}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1990}], 'contribs': ['Lisp', 'Artificial Intelligence', 'ALGOL'], 'name': {'first': 'John', 'last': 'McCarthy'}, 'birth': datetime.datetime(1927, 9, 4, 4, 0), 'death': datetime.datetime(2011, 12, 24, 5, 0)}
+========        
+#3
+Original Document Count:        
+10
+New Document Count:     
+12
+========        
+#4
+{'_id': 1, 'awards': [{'award': 'W.W. McDowell Award', 'by': 'IEEE Computer Society', 'year': 1967}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1975}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1977}, {'award': 'Draper Prize', 'by': 'National Academy of Engineering', 'year': 1993}], 'contribs': ['Fortran', 'ALGOL', 'Backus-Naur Form', 'FP'], 'name': {'first': 'John', 'last': 'Backus'}, 'birth': datetime.datetime(1924, 12, 3, 5, 0), 'death': datetime.datetime(2007, 3, 17, 4, 0)}
+{'_id': 4, 'awards': [{'award': 'Rosing Prize', 'by': 'Norwegian Data Association', 'year': 1999}, {'award': 'Turing Award', 'by': 'ACM', 'year': 2001}, {'award': 'IEEE John von Neumann Medal', 'by': 'IEEE', 'year': 2001}], 'contribs': ['OOP', 'Simula'], 'name': {'first': 'Kristen', 'last': 'Nygaard'}, 'birth': datetime.datetime(1926, 8, 27, 4, 0), 'death': datetime.datetime(2002, 8, 10, 4, 0)}
+{'_id': 5, 'awards': [{'award': 'Rosing Prize', 'by': 'Norwegian Data Association', 'year': 1999}, {'award': 'Turing Award', 'by': 'ACM', 'year': 2001}, {'award': 'IEEE John von Neumann Medal', 'by': 'IEEE', 'year': 2001}], 'contribs': ['OOP', 'Simula'], 'name': {'first': 'Ole-Johan', 'last': 'Dahl'}, 'birth': datetime.datetime(1931, 10, 12, 4, 0), 'death': datetime.datetime(2002, 6, 29, 4, 0)}
+{'_id': ObjectId('58eea828926fc434097f3fb5'), 'oid': '51e062189c6ae665454e301d', 'awards': [{'award': 'Turing Award', 'by': 'ACM', 'year': 1983}, {'award': 'National Medal of Technology', 'by': 'United States', 'year': 1998}, {'award': 'Japan Prize', 'by': 'The Japan Prize Foundation', 'year': 2011}], 'contribs': ['UNIX', 'C'], 'name': {'first': 'Dennis', 'last': 'Ritchie'}, 'birth': datetime.datetime(1941, 9, 9, 4, 0), 'death': datetime.datetime(2011, 10, 12, 4, 0)}
+========        
+#5
+{'_id': 1, 'awards': [{'award': 'W.W. McDowell Award', 'by': 'IEEE Computer Society', 'year': 1967}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1975}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1977}, {'award': 'Draper Prize', 'by': 'National Academy of Engineering', 'year': 1993}], 'contribs': ['Fortran', 'ALGOL', 'Backus-Naur Form', 'FP'], 'name': {'first': 'John', 'last': 'Backus'}, 'birth': datetime.datetime(1924, 12, 3, 5, 0), 'death': datetime.datetime(2007, 3, 17, 4, 0)}
+{'contribs': ['Python'], '_id': 6, 'name': {'first': 'Guido', 'last': 'van Rossum'}, 'birth': datetime.datetime(1956, 1, 31, 5, 0), 'awards': [{'award': 'Award for the Advancement of Free Software', 'by': 'Free Software Foundation', 'year': 2001}, {'award': 'NLUUG Award', 'by': 'NLUUG', 'year': 2003}]}
+{'contribs': ['Ruby'], '_id': 8, 'name': {'first': 'Yukihiro', 'last': 'Matsumoto', 'aka': 'Matz'}, 'birth': datetime.datetime(1965, 4, 14, 4, 0), 'awards': [{'award': 'Award for the Advancement of Free Software', 'by': 'Free Software Foundation', 'year': '2011'}]}
+{'contribs': ['Java'], '_id': 9, 'name': {'first': 'James', 'last': 'Gosling'}, 'birth': datetime.datetime(1955, 5, 19, 4, 0), 'awards': [{'award': 'The Economist Innovation Award', 'by': 'The Economist', 'year': 2002}, {'award': 'Officer of the Order of Canada', 'by': 'Canada', 'year': 2007}]}
+{'_id': 10, 'name': {'first': 'Martin', 'last': 'Odersky'}, 'contribs': ['Scala']}
+{'_id': 20, 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1977}], 'contribs': ['C++', 'Simula'], 'name': {'first': 'Alex', 'last': 'Chen'}, 'birth': datetime.datetime(1933, 8, 27, 4, 0), 'death': datetime.datetime(1984, 11, 7, 4, 0)}
+{'_id': 30, 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1963}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1966}], 'contribs': ['C++', 'FP', 'Lisp'], 'name': {'first': 'David', 'last': 'Mark'}, 'birth': datetime.datetime(1911, 4, 12, 4, 0), 'death': datetime.datetime(2000, 11, 7, 4, 0)}
+========        
+#6
+{'contribs': ['UNIX', 'C'], 'name': {'first': 'Dennis', 'last': 'Ritchie'}}
+========        
+#7
+Original Document:      
+{'contribs': ['Python'], '_id': 6, 'name': {'first': 'Guido', 'last': 'van Rossum'}, 'birth': datetime.datetime(1956, 1, 31, 5, 0), 'awards': [{'award': 'Award for the Advancement of Free Software', 'by': 'Free Software Foundation', 'year': 2001}, {'award': 'NLUUG Award', 'by': 'NLUUG', 'year': 2003}]}
+New Document:   
+{'contribs': ['Python', 'OOP'], '_id': 6, 'name': {'first': 'Guido', 'last': 'van Rossum'}, 'birth': datetime.datetime(1956, 1, 31, 5, 0), 'awards': [{'award': 'Award for the Advancement of Free Software', 'by': 'Free Software Foundation', 'year': 2001}, {'award': 'NLUUG Award', 'by': 'NLUUG', 'year': 2003}]}
+========        
+#8
+Original Document:      
+{'_id': 20, 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1977}], 'contribs': ['C++', 'Simula'], 'name': {'first': 'Alex', 'last': 'Chen'}, 'birth': datetime.datetime(1933, 8, 27, 4, 0), 'death': datetime.datetime(1984, 11, 7, 4, 0)}
+New Document:   
+{'_id': 20, 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1977}], 'contribs': ['C++', 'Simula'], 'name': {'first': 'Alex', 'last': 'Chen'}, 'comments': ['He taught in 3 universities', 'died from cancer', 'lived in CA'], 'birth': datetime.datetime(1933, 8, 27, 4, 0), 'death': datetime.datetime(1984, 11, 7, 4, 0)}
+========        
+#9
+Alex Chen's Contribution:       
+['C++', 'Simula']
+Other who have the same contributiong:  
+{'_id': 'C++', 'people': [{'first': 'Alex', 'last': 'Chen'}, {'first': 'David', 'last': 'Mark'}]}
+{'_id': 'Simula', 'people': [{'first': 'Alex', 'last': 'Chen'}, {'first': 'Ole-Johan', 'last': 'Dahl'}, {'first': 'Kristen', 'last': 'Nygaard'}]}
+========        
+#10
+Document with name 'Jo*':       
+{'_id': 1, 'awards': [{'award': 'W.W. McDowell Award', 'by': 'IEEE Computer Society', 'year': 1967}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1975}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1977}, {'award': 'Draper Prize', 'by': 'National Academy of Engineering', 'year': 1993}], 'contribs': ['Fortran', 'ALGOL', 'Backus-Naur Form', 'FP'], 'name': {'first': 'John', 'last': 'Backus'}, 'birth': datetime.datetime(1924, 12, 3, 5, 0), 'death': datetime.datetime(2007, 3, 17, 4, 0)}
+{'_id': 5, 'awards': [{'award': 'Rosing Prize', 'by': 'Norwegian Data Association', 'year': 1999}, {'award': 'Turing Award', 'by': 'ACM', 'year': 2001}, {'award': 'IEEE John von Neumann Medal', 'by': 'IEEE', 'year': 2001}], 'contribs': ['OOP', 'Simula'], 'name': {'first': 'Ole-Johan', 'last': 'Dahl'}, 'birth': datetime.datetime(1931, 10, 12, 4, 0), 'death': datetime.datetime(2002, 6, 29, 4, 0)}
+{'contribs': ['Java'], '_id': 9, 'name': {'first': 'James', 'last': 'Gosling'}, 'birth': datetime.datetime(1955, 5, 19, 4, 0), 'awards': [{'award': 'The Economist Innovation Award', 'by': 'The Economist', 'year': 2002}, {'award': 'Officer of the Order of Canada', 'by': 'Canada', 'year': 2007}]}
+{'_id': 2, 'awards': [{'award': 'Turing Award', 'by': 'ACM', 'year': 1971}, {'award': 'Kyoto Prize', 'by': 'Inamori Foundation', 'year': 1988}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1990}], 'contribs': ['Lisp', 'Artificial Intelligence', 'ALGOL'], 'name': {'first': 'John', 'last': 'McCarthy'}, 'birth': datetime.datetime(1927, 9, 4, 4, 0), 'death': datetime.datetime(2011, 12, 24, 5, 0)}
+========        
+#11
+['ACM', 'IEEE Computer Society', 'National Academy of Engineering', 'National Science Foundation', ' British Computer Society', 'Data Processing Management Association', 'United States', 'IEEE', 'Norwegian Data Association', 'Free Software Foundation', 'NLUUG', 'The Japan Prize Foundation', 'Canada', 'The Economist', 'Inamori Foundation', 'WPI']
+========        
+#12
+8
+0
+========        
+#13
+2
+0
+========        
+#14
+Original Document:      
+{'_id': 30, 'name': {'first': 'David', 'last': 'Mark'}, 'contribs': ['C++', 'FP', 'Lisp'], 'birth': datetime.datetime(1911, 4, 12, 4, 0), 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1963}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1966}]}
+New Document:   
+{'_id': 30, 'name': {'first': 'David', 'last': 'Mark'}, 'contribs': ['C++', 'FP', 'Lisp'], 'birth': datetime.datetime(1911, 4, 12, 4, 0), 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1965}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1966}]}
+========        
+#15
+{'_id': 30, 'name': {'first': 'David', 'last': 'Mark'}, 'contribs': ['C++', 'FP', 'Lisp'], 'birth': datetime.datetime(1911, 4, 12, 4, 0), 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1965}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1966}]}
+{'_id': 30, 'name': {'first': 'David', 'last': 'Mark'}, 'contribs': ['C++', 'FP', 'Lisp', 'UNIVAC', 'compiler', 'FLOW-MATIC', 'COBOL'], 'birth': datetime.datetime(1911, 4, 12, 4, 0), 'awards': [{'award': 'WPI Award', 'by': 'WPI', 'year': 1965}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1966}]}
+========        
+#16
+{'_id': {'first': 'Kristen', 'last': 'Nygaard'}}
+{'_id': {'first': 'Ole-Johan', 'last': 'Dahl'}}
+========        
+#17
+Largest ID(include ObjectId type):      
+{'_id': ObjectId('58eea828926fc434097f3fb5')}
+Largest ID(not include ObjectId type):  
+{'_id': 30}
+========        
+#18
+If we do not consider the people with only one documents from ACM, only consider when they have multiple awards:        
+{'_id': 1, 'name': {'first': 'John', 'last': 'Backus'}, 'contribs': ['Fortran', 'ALGOL', 'Backus-Naur Form', 'FP'], 'birth': datetime.datetime(1924, 12, 3, 5, 0), 'awards': [{'award': 'W.W. McDowell Award', 'by': 'IEEE Computer Society', 'year': 1967}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1975}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1977}, {'award': 'Draper Prize', 'by': 'National Academy of Engineering', 'year': 1993}]}
+-------
+If we just find a man with ACM award    
+{'_id': 1, 'name': {'first': 'John', 'last': 'Backus'}, 'contribs': ['Fortran', 'ALGOL', 'Backus-Naur Form', 'FP'], 'birth': datetime.datetime(1924, 12, 3, 5, 0), 'awards': [{'award': 'W.W. McDowell Award', 'by': 'IEEE Computer Society', 'year': 1967}, {'award': 'National Medal of Science', 'by': 'National Science Foundation', 'year': 1975}, {'award': 'Turing Award', 'by': 'ACM', 'year': 1977}, {'award': 'Draper Prize', 'by': 'National Academy of Engineering', 'year': 1993}]}
+========        
+#19
+Original Document count:        
+12
+New Document count:     
+10
+========        
+#20
+Document count: 
+10
+

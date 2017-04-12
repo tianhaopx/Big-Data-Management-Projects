@@ -399,12 +399,12 @@ MongoDB server version: 3.4.3
 	"_id" : "C++",
 	"people" : [
 		{
-			"first" : "David",
-			"last" : "Mark"
-		},
-		{
 			"first" : "Alex",
 			"last" : "Chen"
+		},
+		{
+			"first" : "David",
+			"last" : "Mark"
 		}
 	]
 }
@@ -465,6 +465,59 @@ MongoDB server version: 3.4.3
 	]
 }
 {
+	"_id" : 5,
+	"name" : {
+		"first" : "Ole-Johan",
+		"last" : "Dahl"
+	},
+	"birth" : ISODate("1931-10-12T04:00:00Z"),
+	"death" : ISODate("2002-06-29T04:00:00Z"),
+	"contribs" : [
+		"OOP",
+		"Simula"
+	],
+	"awards" : [
+		{
+			"award" : "Rosing Prize",
+			"year" : 1999,
+			"by" : "Norwegian Data Association"
+		},
+		{
+			"award" : "Turing Award",
+			"year" : 2001,
+			"by" : "ACM"
+		},
+		{
+			"award" : "IEEE John von Neumann Medal",
+			"year" : 2001,
+			"by" : "IEEE"
+		}
+	]
+}
+{
+	"_id" : 9,
+	"name" : {
+		"first" : "James",
+		"last" : "Gosling"
+	},
+	"birth" : ISODate("1955-05-19T04:00:00Z"),
+	"contribs" : [
+		"Java"
+	],
+	"awards" : [
+		{
+			"award" : "The Economist Innovation Award",
+			"year" : 2002,
+			"by" : "The Economist"
+		},
+		{
+			"award" : "Officer of the Order of Canada",
+			"year" : 2007,
+			"by" : "Canada"
+		}
+	]
+}
+{
 	"_id" : 2,
 	"name" : {
 		"first" : "John",
@@ -515,10 +568,12 @@ MongoDB server version: 3.4.3
 "WPI"
 ========
 #12
-12
+8
+0
 ========
 #13
-12
+2
+0
 ========
 #14
 {
@@ -583,6 +638,7 @@ MongoDB server version: 3.4.3
 { "_id" : { "first" : "Kristen", "last" : "Nygaard" } }
 ========
 #17
+Largest ID(include ObjectId type)
 {
 	"_id" : ObjectId("51e062189c6ae665454e301d"),
 	"name" : {
@@ -604,6 +660,36 @@ MongoDB server version: 3.4.3
 			"award" : "National Medal of Technology",
 			"year" : 1998,
 			"by" : "United States"
+		}
+	]
+}
+Largest ID(not include ObjectId type)
+{
+	"_id" : 30,
+	"name" : {
+		"first" : "David",
+		"last" : "Mark"
+	},
+	"birth" : ISODate("1911-04-12T04:00:00Z"),
+	"contribs" : [
+		"C++",
+		"FP",
+		"Lisp",
+		"UNIVAC",
+		"compiler",
+		"FLOW-MATIC",
+		"COBOL"
+	],
+	"awards" : [
+		{
+			"award" : "WPI Award",
+			"year" : 1965,
+			"by" : "WPI"
+		},
+		{
+			"award" : "Turing Award",
+			"year" : 1966,
+			"by" : "ACM"
 		}
 	]
 }
@@ -647,6 +733,7 @@ MongoDB server version: 3.4.3
 }
 ========
 #19
+12
 10
 ========
 #20

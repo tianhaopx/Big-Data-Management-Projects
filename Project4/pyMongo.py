@@ -120,7 +120,7 @@ print("========\t")
 #     number of characters. Report the documents sorted by the last name.
 print("#10")
 print("Document with name 'Jo*':\t")
-ans = db.bios.find({"name.first": {"$regex": "^Jo"}})
+ans = db.bios.find({"name.first": {"$regex": "Jo*"}})
 for n in ans:
     print(n)
 print("========\t")
@@ -200,6 +200,11 @@ print("========\t")
 
 # 18) Report only one document where one of the awards is given by “ACM”.
 print("#18")
+print("If we do not consider the people with only one documents from ACM, only consider when they have multiple awards:\t")
+ans = db.bios.find_one({"$and": [{"awards.by": "ACM"}, {"awards.2": {"$exists": True}}]})
+print(ans)
+print("-------")
+print("If we just find a man with ACM award\t")
 ans = db.bios.find_one({"awards.by": "ACM"})
 print(ans)
 print("========\t")
