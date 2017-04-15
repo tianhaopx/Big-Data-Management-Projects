@@ -1,0 +1,8 @@
+[
+{ "_id": "MongoDB", "ancestors": [ "Books", "Programming", "Databases" ], "parent": "Databases", "children": []},
+{ "_id": "dbm", "ancestors": [ "Books", "Programming", "Databases" ], "parent": "Databases", "children": []},
+{ "_id": "Databases", "ancestors": [ "Books", "Programming" ], "parent": "Programming", "children": ["MongoDB", "dbm"]},
+{ "_id": "Languages", "ancestors": [ "Books", "Programming" ], "parent": "Programming", "children": []},
+{ "_id": "Programming", "ancestors": [ "Books" ], "parent": "Books", "children": ["Languages", "Databases"]},
+{ "_id": "Books", "ancestors": [ ], "parent": null, "children": ["Programming"]}
+]
