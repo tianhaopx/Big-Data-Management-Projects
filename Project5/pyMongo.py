@@ -190,7 +190,11 @@ print("========\t")
 print("Question 2.5")
 idx = IndexModel([("awards.award",TEXT)])
 collection.create_indexes([idx])
-ans = collection.find({"$text": {"$search": "\"Turing Award\" \"National Medal\""}})
+ans = collection.find({"$text": {"$search": "\"Turing Award\""}})
+id = [n for n in ans]
+ans = collection.find({"$text": {"$search": "\"National Medal\" -\"Turing Award\""}})
 for n in ans:
+    id.append(n)
+for n in id:
     print(n)
 print("========\t")
