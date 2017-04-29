@@ -147,7 +147,7 @@ db.test.find({$text: {$search: "\"Turing Award\""}}).forEach(function (doc) {
 print("========")
 
 print("Question 2.5")
-var r1 = db.test.find({$text: {$search: "Turing -\"National Medal\""}}).toArray()
+var r1 = db.test.find({$text: {$search: "Turing"}}).toArray()
 var r2 = db.test.find({$text: {$search: "\"National Medal\" -Turing"}}).toArray()
 var result = r1.concat(r2)
 for (var i in result) {
