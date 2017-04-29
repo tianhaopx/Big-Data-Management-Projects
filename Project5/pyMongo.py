@@ -151,7 +151,7 @@ print("========\t")
 print("Question 2.2")
 ans = collection.aggregate([
     {"$match": {"birth": {"$exists": True}}},
-    {"$project": {"year": {"$year": "$birth"}, "_id": "$name"}}
+    {"$group": {"_id": {"$year": "$birth"}, "people": {"$addToSet": "$_id"}}}
 ])
 for n in ans:
     print(n)
